@@ -56,11 +56,16 @@ def get_data(keyword_y,kommun,year,sekom,x_gender="T",keyword_x=None,y_gender=No
     for k,v in mdata.items():
         try:
             inner_retrieve(k,v, year)
+            show_exception_info = False
         except KeyError:           
             # Här sker problem med diagram 2 och 2019. Data från 2019 är ej upplagt på kolada för nyckeltal N15820.
             # Bör kunna hämta tidigare år mha den inre retrieve funktionen.
-            continue
-    
+            show_exception_info = True
+            inner_retrieve(k,v, "2018")
+
+    if show_exception_info:
+        print("Data om föräldrars utbildningsnivå saknas för 2019, visar för 2018.")
+
     return sort_by_fst_lst(df)
 
 def get_single_data(dict, keyword, year, kommun=None):
@@ -83,9 +88,31 @@ def get_single_data(dict, keyword, year, kommun=None):
     if res:
         return res
     else:
-        print("Data saknas för ", kommun, keyword, year)
+        if kommun:
+            print("Data saknas för kommunen", kommun, "\"", key_to_desc[keyword], "\" år", year)
+        else:
+            print("Data saknas för riket", "\"", key_to_desc[keyword], "\" år", year)
         return 0
-    
+
+def get_gendered_single_data(dict, keyword, year, kommun):
+    """
+    Create data sets by collecting the 
+    specified data for a single municipality, divided per gender.
+
+    Arguments:
+    dict      -- Which dict one needs the data from
+    keyword   -- Specifies which keyword
+    year      -- The year that the data is retrieved from.
+    kommun    -- The municipality that the data is retrieved from.
+
+    Returns a pair of ints or floats, and 0 if data is missing.
+    """
+    women_res = dict[kommun][keyword][year]["K"]
+    men_res = dict[kommun][keyword][year]["M"]
+    if women_res and men_res:
+        return (women_res, men_res)
+    else:
+        return (0, 0)
 
 def axis_ticks(keyword):
     if keyword == "N15505":
@@ -117,8 +144,6 @@ def calc_sekom_avg(kommun, year, keyword):
         print("Saknas data för alla kommuner i sekom-gruppen")
         return 0
 
-
-
 class diagram_1(plot):
     
     def __init__(self):
@@ -132,7 +157,16 @@ class diagram_1(plot):
         smallest = min(f + m)
         biggest = max(f + m)
         tick = axis_ticks(keyword)
+
+        try:
+            col.index("red")
+        except:
+            if kommun != "Ej vald":
+                print("Data saknas för", kommun, "år", year)
+
                 
+        print("Visar data från", len(mun),"kommuner.")
+
         self.plot_line(0,0,320,320)
         self.add_scatter(m,f, mun, col, "Pojkar", "Flickor")
         self.format_layout()
@@ -156,10 +190,18 @@ class diagram_2(plot):
         smallest = min(var)
         biggest = max(var)
         tick = axis_ticks(keyword)
+
+        try:
+            col.index("red")
+        except:
+            if kommun != "Ej vald":
+                print("Data saknas för", kommun, "år", year)
+
+        print("Visar data från", len(mun),"kommuner.")
         
         self.add_scatter(ed, var, mun, col, "Föräldrars utbildningsnivå (%)", keyword_desc)
         self.format_layout(show_y_grid=True)
-        self.add_title(keyword_desc, "Föräldrars utbildningsnivå", keyword_desc)
+        self.add_title(keyword_desc, "Föräldrars utbildningsnivå (%)", keyword_desc)
         self.format_x_axis(20 ,[0,100])
         self.format_y_axis(tick, [smallest-5,biggest+5])
         self.format_size(900,600)
@@ -200,13 +242,13 @@ class diagram_3(plot):
 
 
         self.add_bar([kommun, "Sekom", "Rike"],[kommun_over,
-        average_pos_sekom, rike_over],["blue"]*3)
+        average_pos_sekom, rike_over],["skyblue"]*3)
         
 
         self.add_bar([kommun, "Sekom", "Rike"],[-kommun_under,
-        -average_neg_sekom, -rike_under],["red"]*3)
+        -average_neg_sekom, -rike_under],["tomato"]*3)
 
-        self.add_title("Andel som fick högre respektive lägre betyg än vad dem skrev på prov i " + subject)
+        self.add_title("Andel som fick högre respektive lägre slutbetyg än vad de skrev på nationella prov i " + subject)
         self.format_layout()
         self.show()
 
@@ -229,6 +271,9 @@ class diagram_4(plot):
 
         elif subject == "Matematik":
             keyword = "N15572" if over else "N15571"
+            if year == "2018":
+                year = "2017"
+                print("Data saknas för de nationella proven i matematik år 2018, visar för år 2017")
 
         elif subject == "Svenska":
             keyword = "N15570" if over else "N15569"
@@ -245,19 +290,23 @@ class diagram_4(plot):
         pos_data,municipality_name = sort_by_fst_lst([pos_data, municipality_name], False)
         rike_avg = get_single_data(riket_data, keyword, year)
         
-        color = ["black" for x in pos_data]
+        color = ["skyblue" for x in pos_data]
         try:
             color[municipality_name.index(kommun)] = "red"
         except ValueError:
-            pass
-        self.format_layout(show_y_grid=True)
+            if kommun != "Ej vald":
+                print("Data saknas för", kommun, "år", year)
+
+        print("Visar data från", len(municipality_name),"kommuner.")
+
         self.add_bar(municipality_name,pos_data, color, False)
         self.plot_line(0,rike_avg, len(municipality_name), rike_avg,line_type="dot")
 
         title_snippet = "högre" if over else "lägre" 
-        self.add_title("Andel som fick " + title_snippet + " betyg än vad dem skrev på prov i " + subject)
-        
+        self.add_title("Andel som fick " + title_snippet + " slutbetyg än vad de skrev på nationella prov i " + subject)
+        self.format_layout(show_y_grid=True, show_x_ticks=False)
         self.show()
+
 
 
 class diagram_5(plot):
@@ -280,7 +329,7 @@ class diagram_5(plot):
         average_sekom = calc_sekom_avg(kommun,year,keyword)
 
         self.add_bar([kommun, "Sekom", "Rike"],[kommun_data,
-        average_sekom, rike_data],["darkgrey"]*3)
+        average_sekom, rike_data],["skyblue"]*3)
         self.format_layout()
         self.add_title(keyword_desc)
         self.show()

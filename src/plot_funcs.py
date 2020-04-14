@@ -145,7 +145,7 @@ class plot:
                                 yaxis_title = y_title)
 
 
-    def format_layout(self, show_x_grid=False, show_y_grid=False):
+    def format_layout(self, show_x_grid=False, show_y_grid=False, show_x_ticks = True):
         """
         Update the appearence of the canvas.
         
@@ -172,7 +172,7 @@ class plot:
                 showline=True,
                 linecolor='rgb(102, 102, 102)',
                 tickfont_color='rgb(102, 102, 102)',
-                showticklabels=True,
+                showticklabels=show_x_ticks,
                 ticks='outside',
                 tickcolor='rgb(102, 102, 102)',
                 ),

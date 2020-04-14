@@ -133,8 +133,6 @@ class diagram_1(plot):
         biggest = max(f + m)
         tick = axis_ticks(keyword)
                 
-        print("Visar data från", len(mun),"kommuner.")
-
         self.plot_line(0,0,320,320)
         self.add_scatter(m,f, mun, col, "Pojkar", "Flickor")
         self.format_layout()
@@ -158,12 +156,10 @@ class diagram_2(plot):
         smallest = min(var)
         biggest = max(var)
         tick = axis_ticks(keyword)
-
-        print("Visar data från", len(mun),"kommuner.")
         
         self.add_scatter(ed, var, mun, col, "Föräldrars utbildningsnivå (%)", keyword_desc)
         self.format_layout(show_y_grid=True)
-        self.add_title(keyword_desc, "Föräldrars utbildningsnivå (%)", keyword_desc)
+        self.add_title(keyword_desc, "Föräldrars utbildningsnivå", keyword_desc)
         self.format_x_axis(20 ,[0,100])
         self.format_y_axis(tick, [smallest-5,biggest+5])
         self.format_size(900,600)
@@ -254,15 +250,13 @@ class diagram_4(plot):
             color[municipality_name.index(kommun)] = "red"
         except ValueError:
             pass
-
-        print("Visar data från", len(municipality_name),"kommuner.")
-
+        self.format_layout(show_y_grid=True)
         self.add_bar(municipality_name,pos_data, color, False)
         self.plot_line(0,rike_avg, len(municipality_name), rike_avg,line_type="dot")
 
         title_snippet = "högre" if over else "lägre" 
         self.add_title("Andel som fick " + title_snippet + " betyg än vad dem skrev på prov i " + subject)
-        self.format_layout(show_y_grid=True)
+        
         self.show()
 
 

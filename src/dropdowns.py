@@ -2,10 +2,10 @@ import ipywidgets as widgets
 
 class Dropdown:
     
-    def __init__(self, ops,start,desc):
+    def __init__(self, ops,desc):
         self._drop = widgets.Dropdown(
                             options=ops,
-                            value=start,
+                            value=ops[0],
                             description=desc,
                             disabled=False)
     

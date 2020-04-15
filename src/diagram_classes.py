@@ -216,6 +216,7 @@ class diagram_3(plot):
         self.clear()
         if kommun == "Ej vald":
             self.format_layout()
+            self.add_title("Välj en kommun för att visa data")
             self.show()
             return
 
@@ -319,6 +320,7 @@ class diagram_5(plot):
 
         if kommun == "Ej vald":
             self.format_layout()
+            self.add_title("Välj en kommun för att visa data")
             self.show()
             return
 

@@ -1,13 +1,19 @@
 import plotly.graph_objects as go
 import json
+from collections import OrderedDict
+import os
+data_path = os.path.join(os.getcwd(),os.path.dirname(__file__)) + '/../data/'
 
-with open('../data/MasterData.txt') as f:
-    mdata = json.load(f)
+##with open('../data/MasterData.txt') as f:
+with open(data_path + 'MasterData.txt') as f:
+    mdata = json.load(f,  object_pairs_hook=OrderedDict)
 
-with open('../data/riket.txt') as f:
+##with open('../data/riket.txt') as f:
+with open(data_path + 'riket.txt') as f:
     riket_data = json.load(f)
 
-with open('../data/sekom.json') as f:
+##with open('../data/sekom.json') as f:
+with open(data_path + 'sekom.json') as f:
     sekom_data = json.load(f)
 
 key_to_desc = {
@@ -35,22 +41,22 @@ desc_to_key = {v:k for k,v in key_to_desc.items()}
 
 
 class plot:
-    
+
     def __init__(self):
         self._fig = go.Figure()
-    
+
     def clear(self):
         """
         Reset the current canvas.
         """
         self._fig = go.Figure()
-    
-    def show(self):
+
+    def show(self, CONFIG = {}):
         """
         Display the canvas.
         """
-        self._fig.show()
-        
+        self._fig.show(config=CONFIG)
+
     def plot_line(self,x_0,y_0,x_1,y_1,col="black",line_width=1,line_type="solid"):
         """
         Draw a line on the canvas.
@@ -75,7 +81,40 @@ class plot:
                     )
                 )
             )
-        
+
+
+
+    def add_Rike_def(self, RikeAvg):
+        """
+        Add a box with text in
+
+        Arguments:
+        RikeAvg --National avgrage.
+        """
+
+        self._fig.update_layout(
+
+                annotations=[
+                    go.layout.Annotation(
+                        text = 'Den sträckade linjen visar<br>rikets medel: '+str(RikeAvg)+'%',
+                        align='left',
+                        showarrow=False,
+                        xref='paper',
+                        yref='paper',
+                        x=0.05,
+                        y=0.95,
+                        bordercolor='black',
+                        borderwidth=1,
+                        bgcolor = 'white'
+                    )
+                ]
+            )
+
+
+
+
+
+
     def add_scatter(self, data_x, data_y, data_text, cols, xlabel, ylabel):
         """
         Add a scatter plot to the canvas.
@@ -96,17 +135,18 @@ class plot:
             '{}'.format(ylabel) + ': <b>%{y}</b><br>'+
             '{}'.format(xlabel)+': <b>%{x}</b><br><extra></extra>',
             hoverlabel = dict(
-                bgcolor = 'white' 
+                bgcolor = 'white'
             ),
             text=data_text,
             marker=dict(
                 color=cols,
             ),
             showlegend=False))
-        
+
         self._fig.update_traces(mode='markers', marker=dict(symbol='circle', size=8))
 
-    def add_bar(self, data_x, data_y, colors, x_ticks = True):
+
+    def add_bar(self, data_x, data_y, colors, x_ticks = True, text=""):
         """
         Add a bar plot to the canvas.
 
@@ -120,12 +160,14 @@ class plot:
         self._fig.add_trace(go.Bar(
             x=data_x,
             y=data_y,
+            customdata=list(map(abs,data_y)),       # Här skickar vi med en lista av absolutvärden, vilket blir de värden som visas vid hovring.
             hovertemplate = '<b>%{x}</b><br><br>'+
-            '<b>%{y}</b><br>',
+            text + '<b>%{customdata}%</b><br>',
             hoverlabel = dict(
                 bgcolor = 'white'),
             name = "",
             marker_color=colors))
+
 
         self._fig.update_layout(barmode="relative",
                                 xaxis = dict(showticklabels=x_ticks),
@@ -145,10 +187,10 @@ class plot:
                                 yaxis_title = y_title)
 
 
-    def format_layout(self, show_x_grid=False, show_y_grid=False, show_x_ticks = True):
+    def format_layout(self, show_x_grid=False, show_y_grid=False):
         """
         Update the appearence of the canvas.
-        
+
         Arguments:
         plot_title  -- Add a title to the plot.
         show_x_grid -- If True, display a vertical line on each x-axis tick.
@@ -162,23 +204,12 @@ class plot:
                 xanchor='center',
                 yanchor='top'),
             font=dict(
-                family="Arial, monospace",
+                family="Open Sans, sans-serif",
                 size=18,
                 color="#7f7f7f"),
             xaxis=dict(
                 showgrid=show_x_grid,
-                gridwidth=1, 
-                gridcolor='LightGrey',
-                showline=True,
-                linecolor='rgb(102, 102, 102)',
-                tickfont_color='rgb(102, 102, 102)',
-                showticklabels=show_x_ticks,
-                ticks='outside',
-                tickcolor='rgb(102, 102, 102)',
-                ),
-            yaxis=dict(
-                showgrid=show_y_grid,
-                gridwidth=1, 
+                gridwidth=1,
                 gridcolor='LightGrey',
                 showline=True,
                 linecolor='rgb(102, 102, 102)',
@@ -187,7 +218,18 @@ class plot:
                 ticks='outside',
                 tickcolor='rgb(102, 102, 102)',
                 ),
-            margin=dict(l=140, r=40, b=50, t=80),
+            yaxis=dict(
+                showgrid=show_y_grid,
+                gridwidth=1,
+                gridcolor='LightGrey',
+                showline=True,
+                linecolor='rgb(102, 102, 102)',
+                tickfont_color='rgb(102, 102, 102)',
+                showticklabels=True,
+                ticks='outside',
+                tickcolor='rgb(102, 102, 102)',
+                ),
+            margin=dict(l=140, r=40, b=50, t=120),
             legend=dict(
                 font_size=10,
                 yanchor='middle',
@@ -197,7 +239,18 @@ class plot:
             plot_bgcolor='white',
             hovermode='closest',
             )
-    
+
+    def show_zero_line(self):
+
+        self._fig.update_layout(
+            xaxis = dict(
+                zerolinecolor='black',
+                zerolinewidth=1),
+            yaxis = dict(
+                zerolinecolor='black',
+                zerolinewidth=1)
+        )
+
     def format_size(self, WIDTH, HEIGHT):
         """
         Change the dimensions of the canvas.
@@ -221,7 +274,7 @@ class plot:
                 dtick=x_tick,
             ),
         )
-    
+
     def format_y_axis(self, y_tick, y_limits):
         """
         Alter the scope of the y-axis.
@@ -237,4 +290,15 @@ class plot:
             ),
         )
     
-    
+    def edit_toolbar(self, filename, format, height=750,width=1050):
+        return {
+            'displaylogo': False,
+            'toImageButtonOptions': {
+                'format': format,                     # png, svg, jpeg, webp
+                'filename': filename,
+                'height': height,
+                'width': width,
+                'scale': 1 
+            },
+            'modeBarButtonsToRemove': ['toggleSpikelines','hoverCompareCartesian','hoverClosestCartesian','autoScale2d','zoom2d', 'pan2d','lasso2d','select2d']
+        }

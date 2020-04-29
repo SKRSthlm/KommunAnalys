@@ -1,171 +1,52 @@
 from plot_funcs import *
+from InformationLog import *
+from data_funcs import *
 
-
-def sort_by_fst_lst(df, reverse = True):
-    """
-    Sort multiple lists based on a single list.
-    """
-    return zip(*sorted(zip(*df), key=lambda x:x[0], reverse=reverse))
-
-
-def get_data(keyword_y,kommun,year,sekom,x_gender="T",keyword_x=None,y_gender=None):
-    """
-    Create data sets by collecting the 
-    specified data for every municipality.
-
-    Arguments:
-    keyword_y -- Specifies which keyword the data points y-coordinates comes from.
-    kommun    -- If a municipality has been selected, that data point should have a different colour.
-    year      -- The year that the data is retrieved from.
-    sekom     -- If a filter should be applied or not.
-    x_gender  -- Specifies which gender the data points x-coordinates comes from.
-    keyword_x -- Specifies which keyword the data points x-coordinates comes from.
-    y_gender  -- Specifies which gender the data points y-coordinates comes from.
-    """
-    def inner_retrieve(k,v, year):
-        """
-        Retrieve the data for a a single municipality.
-        """
-        x_data = v[keyword_x][year][x_gender]
-        y_data = v[keyword_y][year][y_gender]
-        if x_data is not None and y_data is not None:      # Nullvärdes-filtrering.
-            if no_filter or sekomgrupp == sekom_data[k]:   # Om datan ska filtreras efter sekom.
-                df[3].append(y_data)
-                df[1].append(x_data)
-                df[2].append(k)
-                if kommun == k:
-                    df[0].append('red')
-                else:
-                    df[0].append('skyblue')
-
-    
-    df = [[],[],[],[]]                # Till index 3 läggs värden som ska plottas mot y-axeln, index 1 x-axeln, index 2 kommunnamn, index 0 färger.
-    if y_gender == None:
-        y_gender = x_gender
-    if keyword_x == None:
-        keyword_x = keyword_y
-
-    no_filter = True
-    try:
-        sekomgrupp = sekom_data[kommun]
-        if sekom == "Ja":
-            no_filter = False
-    except KeyError:                   # Om ingen kommun är vald, appliceras inget filter efter sekom.
-        sekomgrupp = ""
-
-    for k,v in mdata.items():
-        try:
-            inner_retrieve(k,v, year)
-            show_exception_info = False
-        except KeyError:           
-            # Här sker problem med diagram 2 och 2019. Data från 2019 är ej upplagt på kolada för nyckeltal N15820.
-            # Bör kunna hämta tidigare år mha den inre retrieve funktionen.
-            show_exception_info = True
-            inner_retrieve(k,v, "2018")
-
-    if show_exception_info:
-        print("Data om föräldrars utbildningsnivå saknas för 2019, visar för 2018.")
-
-    return sort_by_fst_lst(df)
-
-def get_single_data(dict, keyword, year, kommun=None):
-    """
-    Create data sets by collecting the 
-    specified data for a single municipality or all of Sweden.
-
-    Arguments:
-    dict      -- Which dict one needs the data from
-    keyword   -- Specifies which keyword
-    year      -- The year that the data is retrieved from.
-    kommun    -- If a municipality is omitted, this function returns the avarage of sweden.
-
-    Returns int or float, and 0 if data is missing.
-    """
-    if kommun:
-        res = dict[kommun][keyword][year]["T"]
-    else:
-        res = dict[keyword][year]["T"]
-    if res:
-        return res
-    else:
-        if kommun:
-            print("Data saknas för kommunen", kommun, "\"", key_to_desc[keyword], "\" år", year)
-        else:
-            print("Data saknas för riket", "\"", key_to_desc[keyword], "\" år", year)
-        return 0
-
-def get_gendered_single_data(dict, keyword, year, kommun):
-    """
-    Create data sets by collecting the 
-    specified data for a single municipality, divided per gender.
-
-    Arguments:
-    dict      -- Which dict one needs the data from
-    keyword   -- Specifies which keyword
-    year      -- The year that the data is retrieved from.
-    kommun    -- The municipality that the data is retrieved from.
-
-    Returns a pair of ints or floats, and 0 if data is missing.
-    """
-    women_res = dict[kommun][keyword][year]["K"]
-    men_res = dict[kommun][keyword][year]["M"]
-    if women_res and men_res:
-        return (women_res, men_res)
-    else:
-        return (0, 0)
+STANDARD_COL = '#5ba3cf' # nu ljusblå
+HIGHLIGT_COL = '#e45756' # nu röd
+COL1 = '#54a246' # nu grön
+COL2 = '#4c78a8' # nu mörkblå
 
 def axis_ticks(keyword):
     if keyword == "N15505":
         return 50
     return 20
 
-def calc_sekom_avg(kommun, year, keyword):
-    """ 
-    Calculates the avarage of the SEKOM group which kommun belongs to,
-    given a specified year and keyword. For now: weird behaviour when all data is missing.
-    """
-
-    total, kommuner = 0, 0
-
-    for k,x in mdata.items():
-        try:
-            if sekom_data[k] == sekom_data[kommun]:
-                current_value = x[keyword][year]["T"]
-                if current_value:
-                    kommuner += 1
-                    total += float(current_value)
-        except KeyError:
-            # Upplands väsby finns inte med i sekom_data.
-            continue
-
-    try:
-        return round(total / kommuner, 1)
-    except ZeroDivisionError:
-        print("Saknas data för alla kommuner i sekom-gruppen")
-        return 0
-
 class diagram_1(plot):
-    
+
     def __init__(self):
         super().__init__()
-    
-    def update(self, keyword_desc, year, kommun, sekom):
+
+    def update(self, kommun, year, keyword_desc, sekom):
         self.clear()
 
         keyword = desc_to_key[keyword_desc]
-        col,m,mun,f = get_data(keyword,kommun,year,sekom,"M",y_gender="K")
+
+        if kommun == "Ej vald":
+            kommun = None
+
+        infoLog = InformationLog()
+
+        m = get_data(keyword,year,infoLog,gender = "M")
+        f = get_data(keyword,year,infoLog,gender = "K")
+        mun = get_all_municipalties()
+
+        mun, m, f = normalize_data(mun,m,f)
+
+        if sekom == "Ja" and kommun:
+            mun, m, f = filter_on_SEKOM(kommun,mun,m,f)
+            infoLog.addInfo("high","Visar kommuner i ",sekom_data[kommun]," SEKOM-grupp")
+
+        if kommun:
+            mun, m, f = move_to_last(kommun,mun,m,f)
+
+        col = create_list_of_colors(mun,infoLog,STANDARD_COL,HIGHLIGT_COL,kommun)
+
+        infoLog.addInfo("high","Visar data från",len(mun),"kommuner")
+
         smallest = min(f + m)
         biggest = max(f + m)
         tick = axis_ticks(keyword)
-
-        try:
-            col.index("red")
-        except:
-            if kommun != "Ej vald":
-                print("Data saknas för", kommun, "år", year)
-
-                
-        print("Visar data från", len(mun),"kommuner.")
 
         self.plot_line(0,0,320,320)
         self.add_scatter(m,f, mun, col, "Pojkar", "Flickor")
@@ -174,50 +55,68 @@ class diagram_1(plot):
         self.format_x_axis(tick, [smallest-5,biggest+5])
         self.format_y_axis(tick, [smallest-5,biggest+5])
         self.format_size(900,600)
-        self.show()
-        
+        infoLog.informUser()
+        self.show(CONFIG=self.edit_toolbar('Diagram_1','svg'))
+
 
 class diagram_2(plot):
-    
+
     def __init__(self):
         super().__init__()
-        
-    def update(self, keyword_desc, year, kommun, sekom):
+
+    def update(self, kommun,year ,keyword_desc, sekom):
         self.clear()
 
         keyword = desc_to_key[keyword_desc]
-        col,ed,mun,var = get_data(keyword,kommun,year,sekom,keyword_x="N15820")
+
+        if kommun == "Ej vald":
+            kommun = None
+
+        infoLog = InformationLog()
+
+        var = get_data(keyword,year,infoLog)
+        ed = get_data("N15820",year,infoLog)
+        mun = get_all_municipalties()
+
+        mun, ed, var = normalize_data(mun,ed,var)
+
+        if sekom == "Ja" and kommun:
+            mun, ed, var = filter_on_SEKOM(kommun,mun,ed,var)
+            infoLog.addInfo("high","Visar kommuner i ",sekom_data[kommun]," SEKOM-grupp")
+
+        if kommun:
+            mun, ed, var = move_to_last(kommun,mun,ed,var)
+
+        col = create_list_of_colors(mun,infoLog,STANDARD_COL,HIGHLIGT_COL,kommun)
+
+        infoLog.addInfo("high","Visar data från",len(mun),"kommuner")
+
         smallest = min(var)
         biggest = max(var)
         tick = axis_ticks(keyword)
 
-        try:
-            col.index("red")
-        except:
-            if kommun != "Ej vald":
-                print("Data saknas för", kommun, "år", year)
-
-        print("Visar data från", len(mun),"kommuner.")
-        
         self.add_scatter(ed, var, mun, col, "Föräldrars utbildningsnivå (%)", keyword_desc)
         self.format_layout(show_y_grid=True)
-        self.add_title(keyword_desc, "Föräldrars utbildningsnivå (%)", keyword_desc)
+        self.add_title(keyword_desc, "Föräldrars utbildningsnivå", keyword_desc)
         self.format_x_axis(20 ,[0,100])
         self.format_y_axis(tick, [smallest-5,biggest+5])
         self.format_size(900,600)
-        self.show()
+        infoLog.informUser()
+        self.show(CONFIG=self.edit_toolbar('Diagram_2','svg'))
 
 class diagram_3(plot):
 
     def __init__(self):
         super().__init__()
 
-    def update(self, year, kommun, subject):
+    def update(self, kommun,year, subject):
         self.clear()
         if kommun == "Ej vald":
+            self._fig.update_layout(title='<b>Välj en kommun för att visa data.</b>')
             self.format_layout()
-            self.add_title("Välj en kommun för att visa data")
-            self.show()
+            self.format_size(1000,600)
+            self.show(CONFIG=self.edit_toolbar('Diagram_3','svg'))
+
             return
 
         if subject == "Engelska":
@@ -232,26 +131,27 @@ class diagram_3(plot):
             pos_keyword = "N15570"
             neg_keyword = "N15569"
 
-        kommun_over = get_single_data(mdata, pos_keyword, year, kommun)
-        kommun_under =  get_single_data(mdata, neg_keyword, year, kommun)
+        infoLog = InformationLog()
 
-        rike_over = get_single_data(riket_data, pos_keyword, year)
-        rike_under =  get_single_data(riket_data, neg_keyword, year)
+        data_over = get_comparison_list(pos_keyword, year, kommun, infoLog)
+        data_under = get_comparison_list(neg_keyword, year, kommun, infoLog)
 
-        average_pos_sekom = calc_sekom_avg(kommun,year,pos_keyword)
-        average_neg_sekom = calc_sekom_avg(kommun,year,neg_keyword)
+        self.add_bar([kommun, "Sekom", "Rike"],
+                        [x if x else 0 for x in data_over],
+                        [COL1]*3,
+                        text="Högre betyg: ")
 
-
-        self.add_bar([kommun, "Sekom", "Rike"],[kommun_over,
-        average_pos_sekom, rike_over],["skyblue"]*3)
-        
-
-        self.add_bar([kommun, "Sekom", "Rike"],[-kommun_under,
-        -average_neg_sekom, -rike_under],["tomato"]*3)
+        self.add_bar([kommun, "Sekom", "Rike"],
+                [-x if x else 0 for x in data_under],
+                [COL2]*3,
+                text="Lägre betyg: ")
 
         self.add_title("Andel som fick högre respektive lägre slutbetyg än vad de skrev på nationella prov i " + subject)
         self.format_layout()
-        self.show()
+        self.show_zero_line()
+        self.format_size(1000,600)
+        infoLog.informUser()
+        self.show(CONFIG=self.edit_toolbar('Diagram_3','svg'))
 
 class diagram_4(plot):
 
@@ -259,7 +159,7 @@ class diagram_4(plot):
         super().__init__()
 
 
-    def update(self, year, kommun, subject, overUnder):
+    def update(self, kommun, year, subject, overUnder):
         self.clear()
 
         if overUnder == "Betyg över NP-resultat":
@@ -267,71 +167,75 @@ class diagram_4(plot):
         else:
             over = False
 
+        if kommun == "Ej vald":
+            kommun = None
+
         if subject == "Engelska":
             keyword = "N15574" if over else "N15573"
 
         elif subject == "Matematik":
             keyword = "N15572" if over else "N15571"
-            if year == "2018":
-                year = "2017"
-                print("Data saknas för de nationella proven i matematik år 2018, visar för år 2017")
 
         elif subject == "Svenska":
             keyword = "N15570" if over else "N15569"
 
-        pos_data = []
-        municipality_name = []
 
-        for k,x in mdata.items():
-            pos_t = x[keyword][year]["T"]
-            if pos_t:
-                pos_data.append(pos_t)
-                municipality_name.append(k)
-        
-        pos_data,municipality_name = sort_by_fst_lst([pos_data, municipality_name], False)
-        rike_avg = get_single_data(riket_data, keyword, year)
-        
-        color = ["skyblue" for x in pos_data]
-        try:
-            color[municipality_name.index(kommun)] = "red"
-        except ValueError:
-            if kommun != "Ej vald":
-                print("Data saknas för", kommun, "år", year)
+        infoLog = InformationLog()
 
-        print("Visar data från", len(municipality_name),"kommuner.")
+        data = get_data(keyword,year,infoLog)
+        mun = get_all_municipalties()
 
-        self.add_bar(municipality_name,pos_data, color, False)
-        self.plot_line(0,rike_avg, len(municipality_name), rike_avg,line_type="dot")
+        mun, data = normalize_data(mun, data)
 
-        title_snippet = "högre" if over else "lägre" 
+        data,mun = sort_by_fst_lst([data, mun], reverse=False)
+
+        rike_avg = get_single_data(keyword, year, infoLog)
+
+        if rike_avg is None:
+            rike_avg = get_single_data(keyword, infoLog._succeededYear, infoLog)
+            infoLog.addInfo("high", "Visar rikssnitt för nyckeltal",keyword,"från år",infoLog._succeededYear)
+
+        color = create_list_of_colors(mun,infoLog,COL2,HIGHLIGT_COL,kommun)
+        infoLog.addInfo("high","Visar data från",len(mun),"kommuner")
+
+        self.format_layout(show_y_grid=True)
+        self.add_Rike_def(rike_avg)
+        self.add_bar(mun,data, color, False)
+        self.plot_line(0,rike_avg, len(mun), rike_avg,line_type="dot")
+        title_snippet = "högre" if over else "lägre"
         self.add_title("Andel som fick " + title_snippet + " slutbetyg än vad de skrev på nationella prov i " + subject)
-        self.format_layout(show_y_grid=True, show_x_ticks=False)
-        self.show()
-
+        self.format_size(1200,600)
+        infoLog.informUser()
+        self.show(CONFIG=self.edit_toolbar('Diagram_4','svg',width=1400))
 
 
 class diagram_5(plot):
 
     def __init__(self):
         super().__init__()
-    
+
     def update(self,kommun,year,keyword_desc):
         self.clear()
 
         if kommun == "Ej vald":
+            self._fig.update_layout(title='<b>Välj en kommun för att visa data.</b>')
             self.format_layout()
-            self.add_title("Välj en kommun för att visa data")
-            self.show()
+            self.format_size(1000,600)
+            self.show(CONFIG=self.edit_toolbar('Diagram_5','svg'))
+
             return
 
-        keyword = desc_to_key[keyword_desc]
-        kommun_data = get_single_data(mdata,keyword,year,kommun)
-        rike_data = get_single_data(riket_data,keyword,year)
-        
-        average_sekom = calc_sekom_avg(kommun,year,keyword)
+        infoLog = InformationLog()
 
-        self.add_bar([kommun, "Sekom", "Rike"],[kommun_data,
-        average_sekom, rike_data],["skyblue"]*3)
+        keyword = desc_to_key[keyword_desc]
+
+        data = get_comparison_list(keyword, year, kommun, infoLog)
+
+        self.add_bar([kommun, "Sekom", "Rike"],
+                    [x if x else 0 for x in data],
+                    [COL1]*3)
         self.format_layout()
         self.add_title(keyword_desc)
-        self.show()
+        self.format_size(1000,600)
+        infoLog.informUser()
+        self.show(CONFIG=self.edit_toolbar('Diagram_5','svg'))

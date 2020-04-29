@@ -178,8 +178,8 @@ def normalize_data(kommuner, data_x, data_y = None):
     """
     Given two or three lists, this function returns the same lists with None-values removed
     If data_x has a None value on index 10, the data on the same position in the other two
-    lists are removed as well.
-    Ex: [1,2,None,4] and ['a',None,'c','d'] returns ([1,4],['a','d'])
+    lists are removed as well. Does not handle None-values in kommuner.
+    Ex: [1,2,None,4] and ['a',None,'c','d'] as data_x and data_y respectively returns (..., [1,4], ['a','d'])
     """
     zippedData = zip(kommuner, data_x, data_y) if data_y else zip(kommuner, data_x, ['?']*290)
     cleanData = []
@@ -205,15 +205,16 @@ def filter_on_SEKOM(given_kommun, kommuner, data_x, data_y = None):
             filteredData.append((kommun, xVal, yVal))
 
     kommuner, data_x, data_y = zip(*filteredData)
-    if data_y:
-        return (list(kommuner), list(data_x), list(data_y))
-    else:
+    if '?' in data_y:
         return (list(kommuner), list(data_x))
+    else:
+        return (list(kommuner), list(data_x), list(data_y))
 
 def move_to_last(given_kommun, kommuner, data_x, data_y = None):
     """
     Given a municipality and two or three lists, this function returns the same lists
     but with the values corresponding the given municipaltiy moved to last.
+    Precondition: lists are the same length.
     """
     oldIdx = kommuner.index(given_kommun)
     newIdx = len(kommuner) - 1
@@ -226,12 +227,13 @@ def move_to_last(given_kommun, kommuner, data_x, data_y = None):
     else:
         return (kommuner, data_x)
 
-def create_list_of_colors(kommuner, infoLog, std_col, hgl_col, kommun = None):
+def create_list_of_colors(kommuner, infoLog, std_col, hgl_col, kommun):
     """
     Creates a list of colors for data points.
     Will return a list of the same length as kommuner, consisting of the
-    color std_col.
-    If kommun is given, it is highlighted with the hgl_col.
+    color std_col, given as a string with a HEX-value
+    The corresponding position of kommun in kommuner
+    is highlighted with the hgl_col, also given as a string with a HEX-value.
     """
     colors = [std_col]*len(kommuner)
     try:

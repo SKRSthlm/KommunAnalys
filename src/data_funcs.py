@@ -124,7 +124,7 @@ def calc_sekom_avg(keyword, year, given_kommun, infoLog, gender = "T"):
 
     try:
         res = round(total / kommuner, 1)
-        infoLog.addInfo("high","Oviktat medelvärde i", sekomColor, "SEKOM-grupp baseras på",kommuner,"kommuner")
+        infoLog.addInfo("high","Oviktat medelvärde i", sekomColor, "SEKOM-grupp för nyckeltalet",keyword,"baseras på",kommuner,"kommuner")
         return res
     except ZeroDivisionError:
         infoLog.addInfo("high", "Saknas data för alla kommuner i sekom-gruppen för nyckeltal",keyword,"år",year)

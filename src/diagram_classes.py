@@ -37,7 +37,7 @@ class diagram_1(plot):
             mun, m, f = filter_on_SEKOM(kommun,mun,m,f)
             infoLog.addInfo("high","Visar kommuner i ",sekom_data[kommun]," SEKOM-grupp")
 
-        if kommun:
+        if kommun and kommun in mun:
             mun, m, f = move_to_last(kommun,mun,m,f)
 
         col = create_list_of_colors(mun,infoLog,STANDARD_COL,HIGHLIGT_COL,kommun)
@@ -84,7 +84,7 @@ class diagram_2(plot):
             mun, ed, var = filter_on_SEKOM(kommun,mun,ed,var)
             infoLog.addInfo("high","Visar kommuner i ",sekom_data[kommun]," SEKOM-grupp")
 
-        if kommun:
+        if kommun and kommun in mun:
             mun, ed, var = move_to_last(kommun,mun,ed,var)
 
         col = create_list_of_colors(mun,infoLog,STANDARD_COL,HIGHLIGT_COL,kommun)

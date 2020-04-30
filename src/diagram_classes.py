@@ -35,14 +35,14 @@ class diagram_1(plot):
 
         if sekom == "Ja" and kommun:
             mun, m, f = filter_on_SEKOM(kommun,mun,m,f)
-            infoLog.addInfo("high","Visar kommuner i ",sekom_data[kommun]," SEKOM-grupp")
+            infoLog.addInfo(sekomCol = sekom_data[kommun], expectedTot = no_per_sekom(kommun))
 
         if kommun and kommun in mun:
             mun, m, f = move_to_last(kommun,mun,m,f)
 
         col = create_list_of_colors(mun,infoLog,STANDARD_COL,HIGHLIGT_COL,kommun)
 
-        infoLog.addInfo("high","Visar data från",len(mun),"kommuner")
+        infoLog.addInfo(actualQty = len(mun))
 
         smallest = min(f + m)
         biggest = max(f + m)
@@ -55,7 +55,7 @@ class diagram_1(plot):
         self.format_x_axis(tick, [smallest-5,biggest+5])
         self.format_y_axis(tick, [smallest-5,biggest+5])
         self.format_size(900,600)
-        infoLog.informUser()
+        infoLog.informUser('missingData','succeededYears','sekomCol','actualQty','expectedTot','missingMunis',kommun = kommun)
         self.show(CONFIG=self.edit_toolbar('Diagram_1','svg'))
 
 
@@ -82,14 +82,14 @@ class diagram_2(plot):
 
         if sekom == "Ja" and kommun:
             mun, ed, var = filter_on_SEKOM(kommun,mun,ed,var)
-            infoLog.addInfo("high","Visar kommuner i ",sekom_data[kommun]," SEKOM-grupp")
+            infoLog.addInfo(sekomCol = sekom_data[kommun], expectedTot = no_per_sekom(kommun)) 
 
         if kommun and kommun in mun:
             mun, ed, var = move_to_last(kommun,mun,ed,var)
 
         col = create_list_of_colors(mun,infoLog,STANDARD_COL,HIGHLIGT_COL,kommun)
 
-        infoLog.addInfo("high","Visar data från",len(mun),"kommuner")
+        infoLog.addInfo(actualQty = len(mun))
 
         smallest = min(var)
         biggest = max(var)
@@ -101,7 +101,7 @@ class diagram_2(plot):
         self.format_x_axis(20 ,[0,100])
         self.format_y_axis(tick, [smallest-5,biggest+5])
         self.format_size(900,600)
-        infoLog.informUser()
+        infoLog.informUser('missingData','succeededYears','sekomCol','actualQty','expectedTot','missingMunis',kommun = kommun)
         self.show(CONFIG=self.edit_toolbar('Diagram_2','svg'))
 
 class diagram_3(plot):
@@ -150,7 +150,7 @@ class diagram_3(plot):
         self.format_layout()
         self.show_zero_line()
         self.format_size(1000,600)
-        infoLog.informUser()
+        infoLog.informUser('missingData','succeededYears','showSekomAvg')
         self.show(CONFIG=self.edit_toolbar('Diagram_3','svg'))
 
 class diagram_4(plot):
@@ -192,11 +192,10 @@ class diagram_4(plot):
         rike_avg = get_single_data(keyword, year, infoLog)
 
         if rike_avg is None:
-            rike_avg = get_single_data(keyword, infoLog._succeededYear, infoLog)
-            infoLog.addInfo("high", "Visar rikssnitt för nyckeltal",keyword,"från år",infoLog._succeededYear)
+            rike_avg = get_single_data(keyword, infoLog._alertLog["succeededYears"][keyword], infoLog)
 
         color = create_list_of_colors(mun,infoLog,COL2,HIGHLIGT_COL,kommun)
-        infoLog.addInfo("high","Visar data från",len(mun),"kommuner")
+        infoLog.addInfo(actualQty = len(mun))
 
         self.format_layout(show_y_grid=True)
         self.add_Rike_def(rike_avg)
@@ -205,7 +204,7 @@ class diagram_4(plot):
         title_snippet = "högre" if over else "lägre"
         self.add_title("Andel som fick " + title_snippet + " slutbetyg än vad de skrev på nationella prov i " + subject)
         self.format_size(1200,600)
-        infoLog.informUser()
+        infoLog.informUser('missingData','succeededYears','actualQty','expectedTot','missingMunis',kommun = kommun)
         self.show(CONFIG=self.edit_toolbar('Diagram_4','svg',width=1400))
 
 
@@ -237,5 +236,5 @@ class diagram_5(plot):
         self.format_layout()
         self.add_title(keyword_desc)
         self.format_size(1000,600)
-        infoLog.informUser()
+        infoLog.informUser('missingData','succeededYears','showSekomAvg')
         self.show(CONFIG=self.edit_toolbar('Diagram_5','svg'))

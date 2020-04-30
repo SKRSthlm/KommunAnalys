@@ -59,22 +59,22 @@ def get_data(keyword,given_year,infoLog,gender="T"):
     resLst = None
     if yearsToCheck:
         for year in yearsToCheck:
+            infoLog.resetMissingMunis()
             try:
                 resLst = local_get_data(year)
             except KeyError as e:
-                infoLog.addInfo("high","Saknas data för nyckeltalet",keyword,"år",year)
+                infoLog.addInfo(missingData = (keyword,year))
                 continue
             if resLst == [None] * len(resLst):
-                infoLog.addInfo("high","Saknas data för nyckeltalet",keyword,"år",year)
+                infoLog.addInfo(missingData = (keyword,year))
                 continue
             elif resLst and year == yearsToCheck[0]:
                 break
             elif resLst:
-                infoLog.addInfo("high","Visar istället data för nyckeltalet", keyword,"från år",year)
+                infoLog.addInfo(succeededYears = (keyword,year))
                 break
     if not resLst:
-        infoLog.addInfo("high","Saknas data för nyckeltalet", keyword,"för alla tillgängliga år")
-        resLst = []
+        raise ValueError("Nyckeltalet" + str(keyword) + "verkar sakna data för alla år.")
     return resLst
 
 def get_single_data(keyword, year, infoLog, kommun=None, gender = "T"):
@@ -96,13 +96,14 @@ def get_single_data(keyword, year, infoLog, kommun=None, gender = "T"):
     else:
         res = riket_data[keyword][year][gender]
     if res:
-        infoLog.succeededYear(year)
         return res
     else:
         if kommun:
-            infoLog.addInfo("low", kommun, "saknar data för nyckeltal", keyword, "år", year)
+            infoLog.addInfo(missingMunis = kommun)
         else:
-            infoLog.addInfo("high", "Det saknar rikssnitt för nyckeltal", keyword, "år", year)
+            pass
+            # Bör inte krävas ett specifikt meddelande här - saknas rikssnitt saknas garanterat annat
+            # så det löser sig själv
         return None
 
 
@@ -124,10 +125,10 @@ def calc_sekom_avg(keyword, year, given_kommun, infoLog, gender = "T"):
 
     try:
         res = round(total / kommuner, 1)
-        infoLog.addInfo("high","Oviktat medelvärde i", sekomColor, "SEKOM-grupp för nyckeltalet",keyword,"baseras på",kommuner,"kommuner")
+        infoLog.addInfo(sekomCol = sekomColor, actualQty = kommuner, expectedTot = no_per_sekom(given_kommun), showSekomAvg = True)
         return res
     except ZeroDivisionError:
-        infoLog.addInfo("high", "Saknas data för alla kommuner i sekom-gruppen för nyckeltal",keyword,"år",year)
+        # Kräver inget specifikt meddelande, visar aldrig enbart sekom-medel.
         return None
 
 def get_comparison_list(keyword, given_year, kommun, infoLog):
@@ -146,24 +147,24 @@ def get_comparison_list(keyword, given_year, kommun, infoLog):
     yearsToCheck = checkYearsOrder(given_year) #Skapar en ordning att leta efter data i.
     resLst = None
     for year in yearsToCheck:
+        infoLog.resetMissingMunis()
         try:
             resLst = [  get_single_data(keyword, year, infoLog, kommun=kommun),
                         calc_sekom_avg(keyword, year, kommun, infoLog),
                         get_single_data(keyword, year, infoLog)]
         except KeyError as e:
-            infoLog.addInfo("high","Saknas data för nyckeltalet",keyword,"år",year)
+            infoLog.addInfo(missingData = (keyword,year))
             continue
-        if resLst == [None] * len(resLst):
-            infoLog.addInfo("high","Saknas data för nyckeltalet",keyword,"år",year)
+        if None in resLst:
+            infoLog.addInfo(missingData = (keyword,year))
             continue
         elif resLst and year == yearsToCheck[0]:
             break
         elif resLst:
-            infoLog.addInfo("high","Visar istället data för nyckeltalet", keyword,"från år",year)
+            infoLog.addInfo(succeededYears = (keyword,year))
             break
     if not resLst:
-        infoLog.addInfo("high","Saknas data för nyckeltalet", keyword,"för alla tillgängliga år")
-        resLst = []
+        raise ValueError("Nyckeltalet" + str(keyword) + "verkar sakna data för alla år.")
     return resLst
 
 
@@ -239,5 +240,18 @@ def create_list_of_colors(kommuner, infoLog, std_col, hgl_col, kommun):
     try:
         colors[kommuner.index(kommun)] = hgl_col
     except ValueError:
-        infoLog.addInfo("high", "Det saknas data för kommun",kommun,"för år",infoLog._succeededYear)
+        if kommun is not None:
+            infoLog.addInfo(missingMunis = kommun)
     return colors
+
+def no_per_sekom(kommun):
+    """
+    Returns the number of municipalties in the SEKOM group which kommun belongs to.
+    If kommun is not a valid name, an KeyError is raised.
+    """
+    res = 0
+    correctCol = sekom_data[kommun]
+    for k, color in sekom_data.items():
+        if color == correctCol:
+            res += 1
+    return res

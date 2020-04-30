@@ -94,5 +94,5 @@ if __name__ == "__main__":
 
     # Skriv den inhämtade och strukturerade datan till filer
 
-    write_json_to_file("MasterData.txt", Kommun_Data)
-    write_json_to_file("riket.txt", Riket_Data)
+    write_json_to_file("../data/MasterData.txt", Kommun_Data)
+    write_json_to_file("../data/riket.txt", Riket_Data)

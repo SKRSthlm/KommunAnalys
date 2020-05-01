@@ -127,7 +127,7 @@ class plot:
         xlabel    -- Information displayed on hover.
         ylabel    -- Information displayed on hover.
         """
-        
+
         self._fig.add_trace(go.Scatter(
             x=data_x,
             y=data_y,
@@ -146,7 +146,7 @@ class plot:
         self._fig.update_traces(mode='markers', marker=dict(symbol='circle', size=8))
 
 
-    def add_bar(self, data_x, data_y, colors, x_ticks = True, text=""):
+    def add_bar(self, data_x, data_y, colors, x_ticks = True, text="", show_legend = False, legend_name=""):
         """
         Add a bar plot to the canvas.
 
@@ -154,7 +154,10 @@ class plot:
         data_x    -- Data/labels plotted against the x-axis.
         data_y    -- Data plotted against the y-axis.
         colors    -- Decides the colour of each data point.
-        xticks    -- Show x-ticks or not
+        xticks    -- Show x-ticks or not, default is True
+        text      -- Text shown on hover-labels, default is ""
+        show_legend --  Show legend or not, default is True
+        legend_name --  Name of the bar trace shown in the legend, default is ""
         """
 
         self._fig.add_trace(go.Bar(
@@ -164,14 +167,15 @@ class plot:
             hovertemplate = '<b>%{x}</b><br><br>'+
             text + '<b>%{customdata}%</b><br>',
             hoverlabel = dict(
-                bgcolor = 'white'),
-            name = "",
+                bgcolor = 'white',
+                namelength = 0),
+            name = legend_name,
             marker_color=colors))
 
 
         self._fig.update_layout(barmode="relative",
                                 xaxis = dict(showticklabels=x_ticks),
-                                showlegend=False)
+                                showlegend=show_legend)
 
     def add_title(self, title, x_title = "", y_title = ""):
         """
@@ -289,7 +293,7 @@ class plot:
                 dtick=y_tick,
             ),
         )
-    
+
     def edit_toolbar(self, filename, format, height=750,width=1050):
         return {
             'displaylogo': False,
@@ -298,7 +302,7 @@ class plot:
                 'filename': filename,
                 'height': height,
                 'width': width,
-                'scale': 1 
+                'scale': 1
             },
             'modeBarButtonsToRemove': ['toggleSpikelines','hoverCompareCartesian','hoverClosestCartesian','autoScale2d','zoom2d', 'pan2d','lasso2d','select2d']
         }

@@ -125,7 +125,7 @@ def calc_sekom_avg(keyword, year, given_kommun, infoLog, gender = "T"):
 
     try:
         res = round(total / kommuner, 1)
-        infoLog.addInfo(sekomCol = sekomColor, actualQty = kommuner, expectedTot = no_per_sekom(given_kommun), showSekomAvg = True)
+        infoLog.addInfo(sekomCol = sekomColor, actualQty = (keyword,kommuner), expectedTot = no_per_sekom(given_kommun), showSekomAvg = True)
         return res
     except ZeroDivisionError:
         # Kräver inget specifikt meddelande, visar aldrig enbart sekom-medel.
@@ -138,8 +138,7 @@ def get_comparison_list(keyword, given_year, kommun, infoLog):
     Second element is the avarage for the SEKOM group which the municipality belongs to
     Third element is the avarage for all of Sweden
 
-    If one or two values are missing, they are indicated as None-values
-    If all three values are missing, data from another year is returned, with the order
+    If one, two or three values are missing, data from another year is returned, with the order
     from the checkYearsOrder-function.
     This is documented in the infoLog.
     """

@@ -42,7 +42,7 @@ class diagram_1(plot):
 
         col = create_list_of_colors(mun,infoLog,STANDARD_COL,HIGHLIGT_COL,kommun)
 
-        infoLog.addInfo(actualQty = len(mun))
+        infoLog.addInfo(actualQty = (keyword, len(mun)))
 
         smallest = min(f + m)
         biggest = max(f + m)
@@ -89,7 +89,7 @@ class diagram_2(plot):
 
         col = create_list_of_colors(mun,infoLog,STANDARD_COL,HIGHLIGT_COL,kommun)
 
-        infoLog.addInfo(actualQty = len(mun))
+        infoLog.addInfo(actualQty = (keyword,len(mun)))
 
         smallest = min(var)
         biggest = max(var)
@@ -201,7 +201,7 @@ class diagram_4(plot):
             rike_avg = get_single_data(keyword, infoLog._alertLog["succeededYears"][keyword], infoLog)
 
         color = create_list_of_colors(mun,infoLog,COL2,HIGHLIGT_COL,kommun)
-        infoLog.addInfo(actualQty = len(mun))
+        infoLog.addInfo(actualQty = (keyword, len(mun)))
 
         self.format_layout(show_y_grid=True)
         self.add_Rike_def(rike_avg)

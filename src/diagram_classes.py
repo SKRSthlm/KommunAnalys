@@ -152,7 +152,7 @@ class diagram_3(plot):
                 show_legend = True,
                 legend_name = "Lägre slutbetyg än provbetyg")
 
-        self.add_title("Andel som fick högre respektive lägre slutbetyg än vad de skrev på nationella prov i " + subject)
+        self.add_title("Andel som fick högre respektive lägre <br> slutbetyg än vad de skrev på nationella prov i " + subject)
         self.format_layout()
         self.show_zero_line()
         self.format_size(1000,600)

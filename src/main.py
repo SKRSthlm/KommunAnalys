@@ -1,5 +1,6 @@
-#import time
-#starttime=time.time()
+import time
+starttime=time.time()
+import threading
 from diagram_classes import *
 from dropdowns import *
 from IPython.display import display
@@ -101,11 +102,30 @@ class interactive_diagrams:
 
 
 
-def Update_timer():
-    while True:
-        diagram = interactive_diagrams()
-        diagram.plot1()
-        time.sleep(900.0 - ((time.time() - starttime) % 900.0))
+class ThreadingCounter(object):
+    """ Threading example class
+    The run() method will be started and it will run in the background
+    until the application exits.
+    """
+    x= 0
 
+    def __init__(self, interval=(900.0 - ((time.time() - starttime) % 900.0))):
+        """ Constructor
+        :type interval: int
+        :param interval: Check interval, in seconds
+        """
+        self.interval = interval
 
-#Update_timer()
+        thread = threading.Thread(target=self.run, args=())
+        thread.daemon = True                            # Daemonize thread
+        thread.start()                                  # Start the execution
+
+    def run(self):
+        """ Method that runs forever """
+        while True:
+            x =1+1
+            time.sleep(self.interval)
+
+ThreadingCounter()
+
+        

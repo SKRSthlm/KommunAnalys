@@ -1,5 +1,4 @@
 import time
-starttime=time.time()
 import threading
 from diagram_classes import *
 from dropdowns import *
@@ -107,9 +106,8 @@ class ThreadingCounter(object):
     The run() method will be started and it will run in the background
     until the application exits.
     """
-    x= 0
 
-    def __init__(self, interval=(900.0 - ((time.time() - starttime) % 900.0))):
+    def __init__(self, interval=900): #Runns every 15 minutes
         """ Constructor
         :type interval: int
         :param interval: Check interval, in seconds
@@ -121,11 +119,14 @@ class ThreadingCounter(object):
         thread.start()                                  # Start the execution
 
     def run(self):
+        x= 0
         """ Method that runs forever """
-        while True:
-            x =1+1
+        X= True
+        while X:
+            x +=0.1
+            print('')
             time.sleep(self.interval)
 
-ThreadingCounter()
+Threading = ThreadingCounter()
 
         

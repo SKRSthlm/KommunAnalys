@@ -191,19 +191,28 @@ class plot:
         self._fig.add_trace(go.Bar(
             x=data_x,
             y=data_y,
+            hoverinfo= 'none',
             customdata=list(map(abs,data_y)),       # Här skickar vi med en lista av absolutvärden, vilket blir de värden som visas vid hovring.
             hovertemplate = '<b>%{x}</b><br><br>'+
             text + '<b>%{customdata}%</b><br>',
             hoverlabel = dict(
                 bgcolor = 'white',
                 namelength = 0),
+            text = list(map(abs,data_y)),
+            textfont = dict(color="white"),
+            textposition='auto',
             name = legend_name,
-            marker_color=colors))
+            marker_color=colors,
+            cliponaxis = False,
+            textangle=0))
 
 
         self._fig.update_layout(barmode="relative",
                                 xaxis = dict(showticklabels=x_ticks),
-                                showlegend=show_legend)
+                                showlegend=show_legend,
+                                uniformtext_minsize=20, uniformtext_mode='hide') #Denna rad bestämmer hur små värdena får vara inuti stapeln innan de kapas bort.
+                                                                                #Är de mindre än 20 punkter så visas de inte. Tar man bort "uniformtext_minsize" och "uniformtext_mode"
+                                                                                #kommer siffrona alltid att visas, även om de blir oändligt små om stapeln är liten.
 
     def add_title(self, title, x_title = "", y_title = ""):
         """

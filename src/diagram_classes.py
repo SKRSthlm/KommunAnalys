@@ -113,7 +113,7 @@ class diagram_3(plot):
     def update(self, kommun,year, subject):
         self.clear()
         if kommun == "Ej vald":
-            self.add_bar(['Kommun','SEKOM-grupp','Riket'],[0,0,0],[COL1]*3)
+            self.add_bar(['Kommun','Kommungrupp','Riket'],[0,0,0],[COL1]*3)
             self._fig.update_layout(title='<b>Välj en kommun för att visa data.</b>')
             self.format_layout()
             self.format_size(1000,600)
@@ -138,7 +138,7 @@ class diagram_3(plot):
         data_over = get_comparison_list(pos_keyword, year, kommun, infoLog)
         data_under = get_comparison_list(neg_keyword, year, kommun, infoLog)
 
-        x_labels = [kommun, sekom_data[kommun] + " SEKOM-grupp", "Riket"]
+        x_labels = [kommun, sekom_data[kommun] + " Kommungrupp", "Riket"]
         self.add_bar( x_labels,
                         [x if x else 0 for x in data_over],
                         [COL1]*3,
@@ -153,7 +153,7 @@ class diagram_3(plot):
                 show_legend = True,
                 legend_name = "Lägre slutbetyg än provbetyg")
 
-        self.add_title("Andel som fick högre respektive lägre <br> slutbetyg än vad de skrev på nationella prov i " + subject)
+        self.add_title("Andel som fick högre respektive lägre <br> slutbetyg än vad de skrev på nationella prov i " + subject,"", "Procentenheter")
         self.format_layout()
         self.show_zero_line()
         self.format_size(1000,600)
@@ -209,7 +209,7 @@ class diagram_4(plot):
         self.add_bar(mun,data, color, False)
         self.plot_line(0,rike_avg, len(mun), rike_avg,line_type="dot")
         title_snippet = "högre" if over else "lägre"
-        self.add_title("Andel som fick " + title_snippet + " slutbetyg än vad de skrev på nationella prov i " + subject)
+        self.add_title("Andel som fick " + title_snippet + " slutbetyg än vad de skrev på nationella prov i " + subject, "Kommuner", "Procent")
         self.format_size(1200,600)
         infoLog.informUser('missingData','succeededYears','actualQty','expectedTot','missingMunis',kommun = kommun)
         self.show(CONFIG=self.edit_toolbar('Diagram_4','png',width=1400))
@@ -224,7 +224,7 @@ class diagram_5(plot):
         self.clear()
 
         if kommun == "Ej vald":
-            self.add_bar(['Kommun','SEKOM-grupp','Riket'],[0,0,0],[COL1]*3)
+            self.add_bar(['Kommun','Kommungrupp','Riket'],[0,0,0],[COL1]*3)
             self._fig.update_layout(title='<b>Välj en kommun för att visa data.</b>')
             self.format_layout()
             self.format_size(1000,600)
@@ -238,7 +238,7 @@ class diagram_5(plot):
 
         data = get_comparison_list(keyword, year, kommun, infoLog)
 
-        x_labels = [kommun, sekom_data[kommun] + " SEKOM-grupp", "Riket"]
+        x_labels = [kommun, sekom_data[kommun] + " Kommungrupp", "Riket"]
 
         self.add_bar(x_labels,
                     [x if x else 0 for x in data],

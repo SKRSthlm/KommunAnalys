@@ -106,7 +106,7 @@ class InformationLog():
                         print("Visar istället data för nyckeltalet %s år %s" % (keyword, year))
             elif infoKey == "sekomCol" and "showSekomAvg" not in args:
                 if self._alertLog[infoKey] is not None:
-                    print("Visar kommuner från %s SEKOM-grupp" % self._alertLog[infoKey])
+                    print("Visar kommuner från %s kommungrupp" % self._alertLog[infoKey])
             elif infoKey == "actualQty" and "expectedTot" not in args:
                 for value in self._alertLog[infoKey].values():
                     print("Visar data från %s kommuner" % value)
@@ -117,7 +117,7 @@ class InformationLog():
                 pass
             elif infoKey == "showSekomAvg":
                 for keyword, value in self._alertLog["actualQty"].items():
-                    print("Oviktat medelvärde för nyckeltal %s i %s SEKOM-grupp baseras på data från %s av %s kommuner"
+                    print("Oviktat medelvärde för nyckeltal %s i %s kommungrupp baseras på data från %s av %s kommuner"
                         % (keyword,self._alertLog["sekomCol"], value,self._alertLog["expectedTot"]))
             else:
                 raise IndexError("Unknown information key: %s. See documentation." % infoKey)

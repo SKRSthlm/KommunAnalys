@@ -65,7 +65,7 @@ class interactive_diagrams:
         self._4_drop_years = Dropdown(self._years, 'År: ')
         self._4_drop_munis = Dropdown(self._munis,'Kommun: ')
         self._4_drop_subj = Dropdown(["Matematik", "Svenska", "Engelska"],"Ämne: ")
-        self._4_drop_over_under = Dropdown(["Betyg över NP-resultat", "Betyg under NP-resultat"],"över/under: ")
+        self._4_drop_over_under = Dropdown(["Betyg över NP-resultat", "Betyg under NP-resultat"],"högre/lägre: ")
         self._4 = diagram_4()
 
         self._5_keywords = ["N15419", "N15505", "N15436"]

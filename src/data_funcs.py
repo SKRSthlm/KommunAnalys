@@ -12,7 +12,7 @@ def sort_by_fst_lst(df, reverse = False):
 def checkYearsOrder(year, years = YEARS):
     '''
     Accepts a year in the range specified in YEARS in the API_Anrop file.
-    Returns a permutation of the years from YEARS in which order to look for data, excluding the given year.
+    Returns a permutation of the years from YEARS in which order to look for data, including the given year.
     Prioritizes data closer to the given year, and rather more recent years than not.
     Example: If YEARS are "2016,2017,2018,2019" and input is 2018 the function returns [2018,2019,2017,2016].
     YEARS can be "unchoosen" with the years argument, for testing purposes.

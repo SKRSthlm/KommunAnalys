@@ -43,18 +43,18 @@ class interactive_diagrams:
 
         self._1_keywords = ["N15419", "N15505", "N15436"]
         self._1_keydesc = [pf.key_to_desc[k] for k in self._1_keywords]
-        self._1_drop_keys = Dropdown(self._1_keydesc, 'Variabel: ')
+        self._1_drop_keys = Dropdown(self._1_keydesc, 'Nyckeltal: ')
         self._1_drop_years = Dropdown(self._years, 'År: ')
         self._1_drop_munis = Dropdown(self._munis,'Kommun: ')
-        self._1_drop_sekom = Dropdown(self._sekom, "Sekomfilter: ")
+        self._1_drop_sekom = Dropdown(self._sekom, "Kommungrupp: ")
         self._1 = diagram_1()
 
         self._2_keywords = ["N15419", "N15505", "N15436"]
         self._2_keydesc = [pf.key_to_desc[k] for k in self._2_keywords]
-        self._2_drop_keys = Dropdown(self._2_keydesc, 'Variabel: ')
-        self._2_drop_years = Dropdown(["2016", "2017", "2018", "2019"],'År:')
+        self._2_drop_keys = Dropdown(self._2_keydesc, 'Nyckeltal: ')
+        self._2_drop_years = Dropdown(self._years,'År:')
         self._2_drop_munis = Dropdown(self._munis,'Kommun: ')
-        self._2_drop_sekom = Dropdown(self._sekom, "Sekomfilter: ")
+        self._2_drop_sekom = Dropdown(self._sekom, "Kommungrupp: ")
         self._2 = diagram_2()
 
         self._3_drop_years = Dropdown(self._years,'År: ')
@@ -65,7 +65,7 @@ class interactive_diagrams:
         self._4_drop_years = Dropdown(self._years, 'År: ')
         self._4_drop_munis = Dropdown(self._munis,'Kommun: ')
         self._4_drop_subj = Dropdown(["Matematik", "Svenska", "Engelska"],"Ämne: ")
-        self._4_drop_over_under = Dropdown(["Betyg över NP-resultat", "Betyg under NP-resultat"],"Över/under: ")
+        self._4_drop_over_under = Dropdown(["Betyg över NP-resultat", "Betyg under NP-resultat"],"över/under: ")
         self._4 = diagram_4()
 
         self._5_keywords = ["N15419", "N15505", "N15436"]

@@ -17,9 +17,9 @@ with open(data_path + 'sekom.json') as f:
     sekom_data = json.load(f)
 
 key_to_desc = {
-        "N15419": "Kunskapskrav uppnått (%)",
+        "N15419": "Kunskapskrav uppnått, Procent",
         "N15505": "Meritvärde",
-        "N15436": "Behörighet, yrkesprogram (%)",
+        "N15436": "Behörighet, yrkesprogram, procent",
         "U15461": "Elever i år 9 som är behöriga till yrkespr. avvikelse från modellberäknat värde kommunala skolor, procentenheter",
         "N15485": "Elever i åk 6 med lägst betyget E i matematik, kommunala skolor, andel (%)",
         "N15488": "Elever i åk 6 med lägst betyget E i svenska, kommunala skolor, andel (%)",
@@ -66,6 +66,7 @@ class plot:
         (x_1,y_1)  -- End_point
         col        -- Colour
         line_width -- Width
+        line_type  -- Type
         """
         self._fig.add_shape(
             go.layout.Shape(
@@ -84,38 +85,65 @@ class plot:
 
 
 
-    def add_Rike_def(self, RikeAvg):
+    def add_def(self,Diagram,RikeAvg):
         """
         Add a box with text in
 
         Arguments:
         RikeAvg --National avgrage.
         """
+        if Diagram==True:
+            self._fig.update_layout(
+                    annotations=[
+                        go.layout.Annotation(
+                            text = 'Den sträckade linjen visar<br>rikets medel: '+str(RikeAvg)+' procent',
+                            align='left',
+                            showarrow=False,
+                            xref='paper',
+                            yref='paper',
+                            x=0.05,
+                            y=0.95,
+                            bordercolor='black',
+                            borderwidth=1,
+                            bgcolor = 'white'
+                        )
+                    ]
+                )
+        else: 
+            self._fig.update_layout(
+                    annotations=[
+                        go.layout.Annotation(
+                            text = "Flickor har högre resultat än pojkar",
+                            align='left',
+                            showarrow=False,
+                            xref='paper',
+                            yref='paper',
+                            x=0.04,
+                            y=1.00,
+                            bordercolor='black',
+                            borderwidth=1,
+                          
+                        ),  go.layout.Annotation(
+                            text = "Pojkar har högre resultat än flickor",
+                            align='left',
+                            showarrow=False,
+                            xref='paper',
+                            yref='paper',
+                            x=1.00,
+                            y=0.025,
+                            bordercolor='black',
+                            borderwidth=1,
+                            
+                        )
+                    ]
+                ) 
 
-        self._fig.update_layout(
-
-                annotations=[
-                    go.layout.Annotation(
-                        text = 'Den sträckade linjen visar<br>rikets medel: '+str(RikeAvg)+'%',
-                        align='left',
-                        showarrow=False,
-                        xref='paper',
-                        yref='paper',
-                        x=0.05,
-                        y=0.95,
-                        bordercolor='black',
-                        borderwidth=1,
-                        bgcolor = 'white'
-                    )
-                ]
-            )
 
 
 
 
 
-
-    def add_scatter(self, data_x, data_y, data_text, cols, xlabel, ylabel):
+    def add_scatter(self, data_x, data_y, data_text, colors, xlabel, ylabel):
         """
         Add a scatter plot to the canvas.
 
@@ -123,7 +151,7 @@ class plot:
         data_x    -- Data plotted against the x-axis.
         data_y    -- Data plotted against the y-axis.
         data_text -- Information displayed on hover.
-        cols      -- Decides the colour of each data point.
+        colors      -- Decides the colour of each data point.
         xlabel    -- Information displayed on hover.
         ylabel    -- Information displayed on hover.
         """
@@ -139,7 +167,7 @@ class plot:
             ),
             text=data_text,
             marker=dict(
-                color=cols,
+                color=colors,
             ),
             showlegend=False))
 
@@ -156,7 +184,7 @@ class plot:
         colors    -- Decides the colour of each data point.
         xticks    -- Show x-ticks or not, default is True
         text      -- Text shown on hover-labels, default is ""
-        show_legend --  Show legend or not, default is True
+        show_legend --  Show legend or not, default is False
         legend_name --  Name of the bar trace shown in the legend, default is ""
         """
 
@@ -295,6 +323,15 @@ class plot:
         )
 
     def edit_toolbar(self, filename, format, height=750,width=1050):
+        """
+        Edit the options of the toolbar at the top of the diagram canvas.
+
+        Argument description:
+        filename 	-- a string specifying the default name of the file that downloads when pressing the “save plot” icon.
+        format 		-- one of “png”, “svg”, “jpeg”, “webp”. Specifies the file format of the file that downloads when pressing the “save plot” icon.
+        height		-- the height of the download, in pixels. Default is 750px.
+        width		-- the width of the download, in pixels. Default is 1050px.
+        """
         return {
             'displaylogo': False,
             'toImageButtonOptions': {

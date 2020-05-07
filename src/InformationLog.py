@@ -1,4 +1,5 @@
 from collections import OrderedDict
+
 class InformationLog():
     """docstring for InformationLog."""
 
@@ -48,7 +49,6 @@ class InformationLog():
                     self._alertLog[key][keyword] = year
                 except TypeError as e:
                     raise TypeError("Specify as tuple or list with two elements!")
-
             elif key in ["sekomCol", "expectedTot"]:
                 self._alertLog[key] = value
             elif key == "showSekomAvg":
@@ -123,6 +123,9 @@ class InformationLog():
                 raise IndexError("Unknown information key: %s. See documentation." % infoKey)
 
     def resetMissingMunis(self):
+        """
+        Resets the set of missing municipalities
+        """
         self._alertLog["missingMunis"] = set()
 
     def reset(self):

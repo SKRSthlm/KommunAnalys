@@ -51,12 +51,13 @@ class diagram_1(plot):
         self.plot_line(0,0,320,320)
         self.add_scatter(m,f, mun, col, "Pojkar", "Flickor")
         self.format_layout()
+        self.add_def(False,0)
         self.add_title(keyword_desc, "Pojkar", "Flickor")
         self.format_x_axis(tick, [smallest-5,biggest+5])
         self.format_y_axis(tick, [smallest-5,biggest+5])
         self.format_size(900,600)
         infoLog.informUser('missingData','succeededYears','sekomCol','actualQty','expectedTot','missingMunis',kommun = kommun)
-        self.show(CONFIG=self.edit_toolbar('Diagram_1','svg'))
+        self.show(CONFIG=self.edit_toolbar('Diagram_1','png'))
 
 
 class diagram_2(plot):
@@ -102,7 +103,7 @@ class diagram_2(plot):
         self.format_y_axis(tick, [smallest-5,biggest+5])
         self.format_size(900,600)
         infoLog.informUser('missingData','succeededYears','sekomCol','actualQty','expectedTot','missingMunis',kommun = kommun)
-        self.show(CONFIG=self.edit_toolbar('Diagram_2','svg'))
+        self.show(CONFIG=self.edit_toolbar('Diagram_2','png'))
 
 class diagram_3(plot):
 
@@ -116,7 +117,7 @@ class diagram_3(plot):
             self._fig.update_layout(title='<b>Välj en kommun för att visa data.</b>')
             self.format_layout()
             self.format_size(1000,600)
-            self.show(CONFIG=self.edit_toolbar('Diagram_3','svg'))
+            self.show(CONFIG=self.edit_toolbar('Diagram_3','png'))
 
             return
 
@@ -157,7 +158,7 @@ class diagram_3(plot):
         self.show_zero_line()
         self.format_size(1000,600)
         infoLog.informUser('missingData','succeededYears','showSekomAvg')
-        self.show(CONFIG=self.edit_toolbar('Diagram_3','svg'))
+        self.show(CONFIG=self.edit_toolbar('Diagram_3','png'))
 
 class diagram_4(plot):
 
@@ -204,14 +205,14 @@ class diagram_4(plot):
         infoLog.addInfo(actualQty = (keyword, len(mun)))
 
         self.format_layout(show_y_grid=True)
-        self.add_Rike_def(rike_avg)
+        self.add_def(True,rike_avg)
         self.add_bar(mun,data, color, False)
         self.plot_line(0,rike_avg, len(mun), rike_avg,line_type="dot")
         title_snippet = "högre" if over else "lägre"
         self.add_title("Andel som fick " + title_snippet + " slutbetyg än vad de skrev på nationella prov i " + subject)
         self.format_size(1200,600)
         infoLog.informUser('missingData','succeededYears','actualQty','expectedTot','missingMunis',kommun = kommun)
-        self.show(CONFIG=self.edit_toolbar('Diagram_4','svg',width=1400))
+        self.show(CONFIG=self.edit_toolbar('Diagram_4','png',width=1400))
 
 
 class diagram_5(plot):
@@ -227,7 +228,7 @@ class diagram_5(plot):
             self._fig.update_layout(title='<b>Välj en kommun för att visa data.</b>')
             self.format_layout()
             self.format_size(1000,600)
-            self.show(CONFIG=self.edit_toolbar('Diagram_5','svg'))
+            self.show(CONFIG=self.edit_toolbar('Diagram_5','png'))
 
             return
 
@@ -246,4 +247,4 @@ class diagram_5(plot):
         self.add_title(keyword_desc)
         self.format_size(1000,600)
         infoLog.informUser('missingData','succeededYears','showSekomAvg')
-        self.show(CONFIG=self.edit_toolbar('Diagram_5','svg'))
+        self.show(CONFIG=self.edit_toolbar('Diagram_5','png'))

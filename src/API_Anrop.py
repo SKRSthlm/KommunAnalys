@@ -6,7 +6,7 @@ import time
 # Programmet tar ~15-20 min att köra, körs bara vid ny inhämtning av data från kolada.
 
 NYCKELTAL = "N15419,N15505,N15436,U15461,N15485,N15488,N15574,N15573,N15572,N15571,N15570,N15569,N15814,N15034,N15008,N15902,N15823,N15820"
-YEARS = "2016,2017,2018,2019"
+YEARS = "2019,2018,2017,2016"
 
 
 def write_json_to_file(Name, a_dict):

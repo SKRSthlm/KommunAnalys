@@ -17,7 +17,7 @@ with open(data_path + 'sekom.json') as f:
     sekom_data = json.load(f)
 
 key_to_desc = {
-        "N15419": "Kunskapskrav uppnått, Procent",
+        "N15419": "Kunskapskrav uppnått, procent",
         "N15505": "Meritvärde",
         "N15436": "Behörighet, yrkesprogram, procent",
         "U15461": "Elever i år 9 som är behöriga till yrkespr. avvikelse från modellberäknat värde kommunala skolor, procentenheter",

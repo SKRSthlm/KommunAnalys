@@ -32,6 +32,7 @@ class diagram_1(plot):
         mun = get_all_municipalties()
 
         mun, m, f = normalize_data(mun,m,f)
+        m, f = round_values(m,f)
 
         if sekom == "Ja" and kommun:
             mun, m, f = filter_on_SEKOM(kommun,mun,m,f)
@@ -80,6 +81,7 @@ class diagram_2(plot):
         mun = get_all_municipalties()
 
         mun, ed, var = normalize_data(mun,ed,var)
+        ed, var = round_values(ed, var)
 
         if sekom == "Ja" and kommun:
             mun, ed, var = filter_on_SEKOM(kommun,mun,ed,var)
@@ -138,6 +140,8 @@ class diagram_3(plot):
         data_over = get_comparison_list(pos_keyword, year, kommun, infoLog)
         data_under = get_comparison_list(neg_keyword, year, kommun, infoLog)
 
+        data_over, data_under = round_values(data_over,data_under)
+
         x_labels = [kommun, sekom_data[kommun] + " Kommungrupp", "Riket"]
         self.add_bar( x_labels,
                         [x if x else 0 for x in data_over],
@@ -193,6 +197,7 @@ class diagram_4(plot):
         mun = get_all_municipalties()
 
         mun, data = normalize_data(mun, data)
+        data = round_values(data)
 
         data,mun = sort_by_fst_lst([data, mun], reverse=False)
 
@@ -237,6 +242,7 @@ class diagram_5(plot):
         keyword = desc_to_key[keyword_desc]
 
         data = get_comparison_list(keyword, year, kommun, infoLog)
+        data = round_values(data)
 
         x_labels = [kommun, sekom_data[kommun] + " Kommungrupp", "Riket"]
 

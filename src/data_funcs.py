@@ -254,3 +254,19 @@ def no_per_sekom(kommun):
         if color == correctCol:
             res += 1
     return res
+
+def round_values(lst1,lst2=None, lst3 = None):
+    """
+    Takes up to three lists containing floats and returns them rounded to the closest integer.
+    """
+
+    lst1 = list(map(round,lst1))
+    if lst2 != None:
+        lst2 = list(map(round,lst2))
+        if lst3 != None:
+            lst3 = list(map(round, lst3))
+            return lst1, lst2, lst3
+        else:
+            return lst1, lst2
+    else:
+        return lst1

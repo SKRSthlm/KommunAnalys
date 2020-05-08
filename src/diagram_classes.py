@@ -106,7 +106,7 @@ class diagram_2(plot):
         self.format_layout(show_y_grid=True)
         self.add_title(keyword_desc, "Föräldrars utbildningsnivå", keyword_desc)
         #self.plot_line(0,rike_avg, len(mun), rike_avg,line_type="dot")
-        legend_text = "Rikets medel: {}".format(rike_avg) + ("" if keyword == "N15505" else "%")
+        legend_text = "Rikets medel: {}".format(round(rike_avg+0.001)) + ("" if keyword == "N15505" else "%")
         self.dotted_line(legend_text, 0,rike_avg, len(mun), rike_avg)
         #self.add_def(True, rike_avg)
         self.format_x_axis(20 ,[0,100])

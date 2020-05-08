@@ -32,7 +32,7 @@ class diagram_1(plot):
         mun = get_all_municipalties()
 
         mun, m, f = normalize_data(mun,m,f)
-        m, f = round_values(m,f)
+        #m, f = round_values(m,f)
 
         if sekom == "Ja" and kommun:
             mun, m, f = filter_on_SEKOM(kommun,mun,m,f)
@@ -81,7 +81,7 @@ class diagram_2(plot):
         mun = get_all_municipalties()
 
         mun, ed, var = normalize_data(mun,ed,var)
-        ed, var = round_values(ed, var)
+        #ed, var = round_values(ed, var)
 
         if sekom == "Ja" and kommun:
             mun, ed, var = filter_on_SEKOM(kommun,mun,ed,var)
@@ -106,7 +106,8 @@ class diagram_2(plot):
         self.format_layout(show_y_grid=True)
         self.add_title(keyword_desc, "Föräldrars utbildningsnivå", keyword_desc)
         #self.plot_line(0,rike_avg, len(mun), rike_avg,line_type="dot")
-        self.dotted_line("Rikets medel", 0,rike_avg, len(mun), rike_avg)
+        legend_text = "Rikets medel: {}".format(rike_avg) + ("" if keyword == "N15505" else "%")
+        self.dotted_line(legend_text, 0,rike_avg, len(mun), rike_avg)
         #self.add_def(True, rike_avg)
         self.format_x_axis(20 ,[0,100])
         self.format_y_axis(tick, [smallest-5,biggest+5])
@@ -204,7 +205,7 @@ class diagram_4(plot):
         mun = get_all_municipalties()
 
         mun, data = normalize_data(mun, data)
-        data = round_values(data)
+        #data = round_values(data)
 
         data,mun = sort_by_fst_lst([data, mun], reverse=False)
 

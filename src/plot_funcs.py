@@ -159,9 +159,10 @@ class plot:
         self._fig.add_trace(go.Scatter(
             x=data_x,
             y=data_y,
+            customdata=list(zip(list(map(round,data_y)),list(map(round,data_x)))),
             hovertemplate = '<b>%{text}</b><br><br>'+
-            '{}'.format(ylabel) + ': <b>%{y}</b><br>'+
-            '{}'.format(xlabel)+': <b>%{x}</b><br><extra></extra>',
+            '{}'.format(ylabel) + ': <b>%{customdata[0]}</b><br>'+
+            '{}'.format(xlabel)+': <b>%{customdata[1]}</b><br><extra></extra>',
             hoverlabel = dict(
                 bgcolor = 'white'
             ),
@@ -187,18 +188,19 @@ class plot:
         show_legend --  Show legend or not, default is False
         legend_name --  Name of the bar trace shown in the legend, default is ""
         """
+        data_y_rounded = list(map(round,(list(map(lambda x: x + 0.001, list(map(abs,data_y)))))))
 
         self._fig.add_trace(go.Bar(
             x=data_x,
             y=data_y,
             hoverinfo= 'none',
-            customdata=list(map(abs,data_y)),       # Här skickar vi med en lista av absolutvärden, vilket blir de värden som visas vid hovring.
+            customdata=data_y_rounded,       # Här skickar vi med en lista av absolutvärden, vilket blir de värden som visas vid hovring.
             hovertemplate = '<b>%{x}</b><br><br>'+
             text + '<b>%{customdata}</b><br>',
             hoverlabel = dict(
                 bgcolor = 'white',
                 namelength = 0),
-            text = list(map(abs,data_y)),
+            text = data_y_rounded,
             textfont = dict(color="white"),
             textposition='auto',
             name = legend_name,

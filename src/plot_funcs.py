@@ -194,7 +194,7 @@ class plot:
             hoverinfo= 'none',
             customdata=list(map(abs,data_y)),       # Här skickar vi med en lista av absolutvärden, vilket blir de värden som visas vid hovring.
             hovertemplate = '<b>%{x}</b><br><br>'+
-            text + '<b>%{customdata}%</b><br>',
+            text + '<b>%{customdata}</b><br>',
             hoverlabel = dict(
                 bgcolor = 'white',
                 namelength = 0),
@@ -350,5 +350,15 @@ class plot:
                 'width': width,
                 'scale': 1
             },
-            'modeBarButtonsToRemove': ['toggleSpikelines','hoverCompareCartesian','hoverClosestCartesian','autoScale2d','zoom2d', 'pan2d','lasso2d','select2d']
+            #'modeBarButtonsToRemove': ['toggleSpikelines','hoverCompareCartesian','hoverClosestCartesian','autoScale2d','zoom2d', 'pan2d','lasso2d','select2d']
         }
+
+    def dotted_line(self,legend_text,x_0,y_0,x_1,y_1,col="black",line_width=1):
+        self._fig.add_trace(go.Scatter(
+                        x=[x_0,x_1], 
+                        y=[y_0,y_1], 
+                        name=legend_text,
+                        line = dict(color=col, width=line_width, dash='dot'),
+                        hoverinfo='skip',
+                        mode='lines'))
+        self._fig.update_layout(legend = dict(font = dict(color="black", size = 12, family="Open Sans, sans-serif")))

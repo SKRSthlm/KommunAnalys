@@ -49,9 +49,9 @@ class diagram_1(plot):
         biggest = max(f + m)
         tick = axis_ticks(keyword)
 
-        self.plot_line(0,0,320,320)
         self.add_scatter(m,f, mun, col, "Pojkar", "Flickor")
         self.format_layout()
+        self.plot_line(0,0,320,320)
         self.add_def(False,0)
         self.add_title(keyword_desc, "Pojkar", "Flickor")
         self.format_x_axis(tick, [smallest-5,biggest+5])
@@ -102,11 +102,12 @@ class diagram_2(plot):
 
 
 
-        self.add_scatter(ed, var, mun, col, "Föräldrars utbildningsnivå (%)", keyword_desc)
+        self.add_scatter(ed, var, mun, col, "Föräldrars utbildningsnivå, procent", keyword_desc)
         self.format_layout(show_y_grid=True)
         self.add_title(keyword_desc, "Föräldrars utbildningsnivå", keyword_desc)
-        self.plot_line(0,rike_avg, len(mun), rike_avg,line_type="dot")
-        self.add_def(True, rike_avg)
+        #self.plot_line(0,rike_avg, len(mun), rike_avg,line_type="dot")
+        self.dotted_line("Rikets medel", 0,rike_avg, len(mun), rike_avg)
+        #self.add_def(True, rike_avg)
         self.format_x_axis(20 ,[0,100])
         self.format_y_axis(tick, [smallest-5,biggest+5])
         self.format_size(900,600)
@@ -152,18 +153,18 @@ class diagram_3(plot):
         self.add_bar( x_labels,
                         [x if x else 0 for x in data_over],
                         [COL1]*3,
-                        text="Högre betyg: ",
+                        text="Högre betyg, procent: ",
                         show_legend = True,
                         legend_name = "Högre slutbetyg än provbetyg")
 
         self.add_bar(x_labels,
                 [-x if x else 0 for x in data_under],
                 [COL2]*3,
-                text="Lägre betyg: ",
+                text="Lägre betyg, procent: ",
                 show_legend = True,
                 legend_name = "Lägre slutbetyg än provbetyg")
 
-        self.add_title("Andel som fick högre respektive lägre <br> slutbetyg än vad de skrev på nationella prov i " + subject,"", "Procentenheter")
+        self.add_title("Andel i procent som fick högre respektive lägre <br> slutbetyg än vad de skrev på nationella prov i " + subject,"", "Procentenheter")
         self.format_layout()
         self.show_zero_line()
         self.format_size(1000,600)

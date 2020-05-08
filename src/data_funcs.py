@@ -256,14 +256,17 @@ def no_per_sekom(kommun):
     return res
 
 def round_values(lst1,lst2=None, lst3 = None):
+    
     """
     Takes up to three lists containing floats and returns them rounded to the closest integer.
     """
-
+    lst1 = list(map(lambda x: x + 0.001,lst1)) #Workaround to ensure 0.5 gets rounded to 1.
     lst1 = list(map(round,lst1))
     if lst2 != None:
+        lst2 = list(map(lambda x: x + 0.001,lst2))
         lst2 = list(map(round,lst2))
         if lst3 != None:
+            lst3 = list(map(lambda x: x + 0.001,lst3))
             lst3 = list(map(round, lst3))
             return lst1, lst2, lst3
         else:

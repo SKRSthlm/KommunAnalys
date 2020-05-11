@@ -150,7 +150,7 @@ class diagram_3(plot):
 
         data_over, data_under = round_values(data_over,data_under)
 
-        x_labels = [kommun, sekom_data[kommun] + " Kommungrupp", "Riket"]
+        x_labels = [kommun, sekom_data[kommun] + " kommungrupp", "Riket"]
         self.add_bar( x_labels,
                         [x if x else 0 for x in data_over],
                         [COL1]*3,
@@ -252,7 +252,7 @@ class diagram_5(plot):
         data = get_comparison_list(keyword, year, kommun, infoLog)
         data = round_values(data)
 
-        x_labels = [kommun, sekom_data[kommun] + " Kommungrupp", "Riket"]
+        x_labels = [kommun, sekom_data[kommun] + " kommungrupp", "Riket"]
 
         self.add_bar(x_labels,
                     [x if x else 0 for x in data],

@@ -212,7 +212,7 @@ class plot:
         self._fig.update_layout(barmode="relative",
                                 xaxis = dict(showticklabels=x_ticks),
                                 showlegend=show_legend,
-                                uniformtext_minsize=20, uniformtext_mode='hide') #Denna rad bestämmer hur små värdena får vara inuti stapeln innan de kapas bort.
+                                uniformtext_minsize=18, uniformtext_mode='hide') #Denna rad bestämmer hur små värdena får vara inuti stapeln innan de kapas bort.
                                                                                 #Är de mindre än 20 punkter så visas de inte. Tar man bort "uniformtext_minsize" och "uniformtext_mode"
                                                                                 #kommer siffrona alltid att visas, även om de blir oändligt små om stapeln är liten.
 

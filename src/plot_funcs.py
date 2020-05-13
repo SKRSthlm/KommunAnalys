@@ -120,8 +120,7 @@ class plot:
                             yref='paper',
                             x=0.04,
                             y=1.00,
-                            bordercolor='black',
-                            borderwidth=1,
+                            font=dict(family="Open Sans, sans-serif",size=12,color="black")
                           
                         ),  go.layout.Annotation(
                             text = "Pojkar har högre resultat än flickor",
@@ -131,8 +130,7 @@ class plot:
                             yref='paper',
                             x=1.00,
                             y=0.025,
-                            bordercolor='black',
-                            borderwidth=1,
+                            font=dict(family="Open Sans, sans-serif",size=12,color="black")
                             
                         )
                     ]

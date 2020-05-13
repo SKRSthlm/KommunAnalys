@@ -90,34 +90,34 @@ class InformationLog():
             if infoKey == "missingMunis":
                 if kommun in self._alertLog[infoKey]:
                     # skriver bara ut för den kommunen
-                    print("Data saknas för kommunen %s" % kommun)
+                    print("Data saknas för kommunen %s." % kommun)
                 elif kommun is False:
                     # är ingen kommun given skrivs alla ut - men bara om missingMunis är specifierat.
-                    print("Data saknas för kommunerna", ", ".join(str(x) for x in self._alertLog[infoKey]))
+                    print("Data saknas för kommunerna", ", ".join(str(x) for x in self._alertLog[infoKey]) + ".")
             elif infoKey == "missingData":
                 # gör inget om ingen data lagts till här - allt har gått som det ska
                 if len(self._alertLog[infoKey]) != 0:
                     for keyword,years in self._alertLog[infoKey].items():
-                        print("Relevant data saknas för nyckeltalet", keyword, "år", ", ".join(str(x) for x in years))
+                        print("Relevant data saknas för nyckeltalet", keyword, "år", ", ".join(str(x) for x in years) + ".")
             elif infoKey == "succeededYears":
                 # gör inget om ingen data lagts till här - allt har gått som det ska
                 if len(self._alertLog[infoKey]) != 0:
                     for keyword,year in self._alertLog[infoKey].items():
-                        print("Visar istället data för nyckeltalet %s år %s" % (keyword, year))
+                        print("Visar istället data för nyckeltalet %s år %s." % (keyword, year))
             elif infoKey == "sekomCol" and "showSekomAvg" not in args:
                 if self._alertLog[infoKey] is not None:
-                    print("Visar kommuner från %s kommungrupp" % self._alertLog[infoKey])
+                    print("Visar kommuner från %s kommungrupp." % self._alertLog[infoKey])
             elif infoKey == "actualQty" and "expectedTot" not in args:
                 for value in self._alertLog[infoKey].values():
-                    print("Visar data från %s kommuner" % value)
+                    print("Visar data från %s kommuner." % value)
             elif infoKey == "actualQty" and "expectedTot" in args:
                 for value in self._alertLog[infoKey].values():
-                    print("Visar data från %s av %s kommuner" % (value, self._alertLog["expectedTot"]))
+                    print("Visar data från %s av %s kommuner." % (value, self._alertLog["expectedTot"]))
             elif infoKey == "expectedTot":
                 pass
             elif infoKey == "showSekomAvg":
                 for keyword, value in self._alertLog["actualQty"].items():
-                    print("Oviktat medelvärde för nyckeltal %s i %s kommungrupp baseras på data från %s av %s kommuner"
+                    print("Oviktat medelvärde för nyckeltal %s i %s kommungrupp baserat på data från %s av %s kommuner."
                         % (keyword,self._alertLog["sekomCol"], value,self._alertLog["expectedTot"]))
             else:
                 raise IndexError("Unknown information key: %s. See documentation." % infoKey)

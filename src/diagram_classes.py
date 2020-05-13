@@ -218,9 +218,11 @@ class diagram_4(plot):
         infoLog.addInfo(actualQty = (keyword, len(mun)))
 
         self.format_layout(show_y_grid=True)
-        self.add_def(True,rike_avg)
+        #self.add_def(True,rike_avg)
+        #self.plot_line(0,rike_avg, len(mun), rike_avg,line_type="dot")
         self.add_bar(mun,data, color, False)
-        self.plot_line(0,rike_avg, len(mun), rike_avg,line_type="dot")
+        legend_text = "Rikets medel: {}%".format(round(rike_avg+0.001))
+        self.dotted_line(legend_text, 0,rike_avg, len(mun), rike_avg)
         title_snippet = "högre" if over else "lägre"
         self.add_title("Andel som fick " + title_snippet + " slutbetyg än vad de skrev på nationella prov i " + subject, "Kommuner", "Procent")
         self.format_size(1200,600)

@@ -13,7 +13,9 @@ En lista med 290 int/float, med None-värden om data saknas för någon kommun. 
 Om data saknas för **alla** kommuner det givna året, väljs data från närmsta år det finns data ifrån. Mer om ordningen på hur 
 åren prioriteras i [checkYearsOrder](###checkYearsOrder). Hämtas data från annat år dokumenteras även detta i info-loggen.
 #### Argumentbeskrivning:
+
 Argument | Beskrivning
+
 -------- | -----------
 `keyword` | Specifiera ett nyckeltal som sträng. Ska finnas i konstanten NYCKELTAL
 `given_year` | Specifiera året som sträng. Se ovan för detaljer om data saknas för detta år.
@@ -26,7 +28,9 @@ Skapar en ordning av år från konstanten YEARS att leta efter data i. Prioriter
 En lista med år som strängar.
 Exempel: om input är 2018 och YEARS är "2016,2017,2018,2019", returneras [2018,2019,2017,2016].
 #### Argumentbeskrivning:
+
 Argument | Beskrivning
+
 -------- | -----------
 `year` | startår, som är sträng eller int
 
@@ -35,6 +39,8 @@ Beskrivning. Inkludera funktion, samt eventuellt "särbeteende".
 #### Returnerar:
 Beskriv vad funktionen returnerar. Beskriv specialfall. Eventuellt ett exempel, om rimligt/hjälpsamt.
 #### Argumentbeskrivning:
+
 Argument | Beskrivning
+
 -------- | -----------
 `argumentNamn` | Beskrivning. Inkludera typ (sträng, int, ...), samt eventuella ytterligare krav.

@@ -11,7 +11,7 @@ Genererar data för alla kommuner i Sverige.
 #### Returnerar:
 En lista med 290 int/float, med None-värden om data saknas för någon kommun. Saknad data registreras i info-loggen. Datan är sorterad i bokstavsordning för kommunernas namn, så på index 0 finns data för kommunen Ale, på index 289 finns data för kommunen Övertorneå.
 Om data saknas för **alla** kommuner det givna året, väljs data från närmsta år det finns data ifrån. Mer om ordningen på hur 
-åren prioriteras i [checkYearsOrder](#checkYearsOrder(year)). Hämtas data från annat år dokumenteras även detta i info-loggen.
+åren prioriteras i [checkYearsOrder](#checkyearsorderyear). Hämtas data från annat år dokumenteras även detta i info-loggen.
 #### Argumentbeskrivning:
 
 Argument | Beskrivning

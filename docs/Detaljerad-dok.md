@@ -5,7 +5,7 @@ Denna version av dokumentationen ämnar att testa hur gitHub pages kommer att se
 
 ## Funktioner i filen *data_funcs.py*
 
-### `get_data(keyword, given_year, infoLog, gender)`
+### get_data(keyword, given_year, infoLog, gender)
 Genererar data för alla kommuner i Sverige.
 
 #### Returnerar:
@@ -15,7 +15,6 @@ Om data saknas för **alla** kommuner det givna året, väljs data från närmst
 #### Argumentbeskrivning:
 
 Argument | Beskrivning
-
 -------- | -----------
 `keyword` | Specifiera ett nyckeltal som sträng. Ska finnas i konstanten NYCKELTAL
 `given_year` | Specifiera året som sträng. Se ovan för detaljer om data saknas för detta år.
@@ -30,7 +29,6 @@ Exempel: om input är 2018 och YEARS är "2016,2017,2018,2019", returneras [2018
 #### Argumentbeskrivning:
 
 Argument | Beskrivning
-
 -------- | -----------
 `year` | startår, som är sträng eller int
 
@@ -41,6 +39,5 @@ Beskriv vad funktionen returnerar. Beskriv specialfall. Eventuellt ett exempel, 
 #### Argumentbeskrivning:
 
 Argument | Beskrivning
-
 -------- | -----------
 `argumentNamn` | Beskrivning. Inkludera typ (sträng, int, ...), samt eventuella ytterligare krav.

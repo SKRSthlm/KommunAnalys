@@ -5,4 +5,4 @@ Antagligen även infon under 'the update()-methods in depth', samt lite informat
 
 Har lagt in alla UML-diagram vi hade i rapporten så att de går att lägga till med markdown:
 
-![Bildtext klassdiagram](https://github.com/SKRSthlm/KommunAnalys/tree/master/docs/pictures/klass1-format-1&2.png)
+![Bildtext klassdiagram](/pictures/klass1-format-1&2.png)

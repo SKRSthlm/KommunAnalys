@@ -1,7 +1,20 @@
-# Detaljerad dokumentation
-Uppdaterad 20e maj 2020.
-Denna version av dokumentationen ämnar att testa hur gitHub pages kommer att se ut.
-[Tillbaka](README.md) till innehållsförteckningen.
+# Detaljerad dokumentation Python
+*Uppdaterad 21e maj 2020.*
+
+Här har vi dokumenterat all kod vi skrivit i python för det här projektet. Python används i all kod som hämtar data från KOLADAs API, manipulerar data, skapar diagram, skapar dropdowns och hanterar fel. Läs [här](generell-dok.md) för mer information om hur och var dessa funktioner och metoder används.
+
+Denna sida innehåller följande delar:
+* Funktioner i filen *API_anrop.py*
+* [Funktioner i filen *data_funcs.py*](#funktionerifilendatafuncspy)
+* Funktioner i filen *InformationLog.py*
+* Funktioner i filen *diagram_classes.py*
+* Funktioner i filen *dropdowns.py*
+* Funktioner i filen *main.py*
+* Funktioner i filen *plot_funcs.py*
+
+**Här behöver vi ska vi göra om dessa till länkar till respektive rubrik**
+
+[Tillbaka](README.md) till övrigt innehåll.
 
 # Funktioner i filen *data_funcs.py*
 
@@ -10,7 +23,7 @@ Genererar data för alla kommuner i Sverige.
 
 #### Returnerar:
 En lista med 290 int/float, med None-värden om data saknas för någon kommun. Saknad data registreras i info-loggen. Datan är sorterad i bokstavsordning för kommunernas namn, så på index 0 finns data för kommunen Ale, på index 289 finns data för kommunen Övertorneå.
-Om data saknas för **alla** kommuner det givna året, väljs data från närmsta år det finns data ifrån. Mer om ordningen på hur 
+Om data saknas för **alla** kommuner det givna året, väljs data från närmsta år det finns data ifrån. Mer om ordningen på hur
 åren prioriteras i [checkYearsOrder](#checkyearsorderyear). Hämtas data från annat år dokumenteras även detta i info-loggen.
 #### Argumentbeskrivning:
 

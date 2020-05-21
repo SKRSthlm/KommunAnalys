@@ -14,7 +14,7 @@ Denna sida innehåller följande delar:
 
 **Här behöver vi ska vi göra om dessa till länkar till respektive rubrik**
 
-[Tillbaka](README.md) till övrigt innehåll.
+[Tillbaka](README.md) till startsidan.
 
 # Funktioner i filen *data_funcs.py*
 
@@ -54,3 +54,6 @@ Beskriv vad funktionen returnerar. Beskriv specialfall. Eventuellt ett exempel, 
 Argument | Beskrivning
 -------- | -----------
 `argumentNamn` | Beskrivning. Inkludera typ (sträng, int, ...), samt eventuella ytterligare krav.
+
+
+[Tillbaka](README.md) till startsidan.

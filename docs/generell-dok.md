@@ -6,3 +6,6 @@ Antagligen även infon under 'the update()-methods in depth', samt lite informat
 Har lagt in alla UML-diagram vi hade i rapporten så att de går att lägga till med markdown:
 
 ![Bildtext klassdiagram](/pictures/klass1-format-1&2.png)
+
+
+[Tillbaka](README.md) till startsidan.

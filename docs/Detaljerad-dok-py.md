@@ -6,7 +6,7 @@ Här har vi dokumenterat all kod vi skrivit i python för det här projektet. Py
 Denna sida innehåller följande delar:
 * [Funktioner i filen *API_anrop.py*](#funktioner-i-filen-api_anrop)
 * [Funktioner i filen *data_funcs.py*](#funktioner-i-filen-data_funcs)
-* Funktioner i filen *InformationLog.py*
+* [Funktioner i filen *InformationLog.py*](#funktioner-i-filen-informationlog)
 * Funktioner i filen *diagram_classes.py*
 * Funktioner i filen *dropdowns.py*
 * Funktioner i filen *main.py*
@@ -16,7 +16,7 @@ Denna sida innehåller följande delar:
 
 [Tillbaka](README.md) till startsidan.
 
----------------
+----
 
 # Funktioner i filen *API_Anrop*
 
@@ -46,7 +46,6 @@ Inga argument.
 
 ## kolada_call_by_municipality(ID)
 Hämtar all data från KOLADA för nyckeltalen i NYCKELTAL per år i YEARS, för en given kommun.
-Return: A dictionary linking each combination of key figure and year to a unique value.
 #### Returnerar:
 Returnerar ett uppslagsverk av nästlade uppslagsverk. Nycklar i nivå ett är nyckeltalskoder, därefter år, och sist kön('K','M','T') vilket ger datan för det året.
 #### Argumentbeskrivning:
@@ -67,7 +66,7 @@ Argument | Beskrivning
 `ID_map` | Ett uppslagsverk med kommun-ID:n som nycklar och kommunnamn (strängar) som data.
 `country_id`  | En sträng med ID för riket.
 
----------------
+----
 
 # Funktioner i filen *data_funcs*
 
@@ -93,9 +92,10 @@ Exempel: om input är 2018 och YEARS är "2016,2017,2018,2019", returneras [2018
 Argument | Beskrivning
 -------- | -----------
 `year` | startår, som är sträng eller int
+`years` | Endast för testning, skriver över konstanten YEARS.
 
 ## get_data(keyword, given_year, infoLog, gender)
-Genererar data för alla kommuner i Sverige, använder [get_single_data](#get_single_data-keyword-year-infoLog-kommun-gender).
+Genererar data för alla kommuner i Sverige, använder [get_single_data](#get_single_datakeyword-year-infolog-kommun-gender).
 
 #### Returnerar:
 En lista med 290 int/float, med None-värden om data saknas för någon kommun. Saknad data registreras i info-loggen. Datan är sorterad i bokstavsordning för kommunernas namn, så på index 0 finns data för kommunen Ale, på index 289 finns data för kommunen Övertorneå.
@@ -233,6 +233,74 @@ Argument | Beskrivning
 -------- | -----------
 `args` | Vilket antal listor som helst. Funktionen är testad för en, två och tre listor som input.
 
+----
+
+# Funktioner i filen *InformationLog*
+
+## init()
+Initierar en instans av en infologg. Skapar bara ett privat uppslagsverk.
+#### Returnerar:
+Instansen.
+#### Argumentbeskrivning:
+Inga argument.
+
+## addInfo(kwargs...)
+Lägg till data för användarmeddelanden.
+#### Returnerar:
+Returnerar ingenting.
+#### Argumentbeskrivning:
+Lägg till valfritt antal argument som infoNyckel=info (se konceptet \*\*kwargs i python). Om en nyckel som inte finns i listan nedan ges, kommer funktionen att ge ett felmeddelande.
+
+Argument dvs info-nyckel | Beskrivning
+-------- | -----------
+`missingMunis`="kommunnamn" | Specificera en kommun som sträng för att indikera att denna kommun inte renderas i plotten (eftersom det saknas data).
+`missingData`=("nyckeltal", år) | Specificera en tupel (ett par) där första elementet är en nyckeltalskod från [NYCKELTAL](#nyckeltal) som sträng och det andra elementet ett år från [YEARS](#years). Indikerar att data för alla kommuner saknas för det här året+nyckeltalet. Kan specificeras flera gånger, då håller loggen koll på att det saknas för flera år.
+`succeededYears`=("nyckeltal", år) | Specificera en tupel som ovan för att indikera att data lyckades hämtas för minst en kommun det givna året+nyckeltalet. Om denna specificeras igen för samma nyckeltal, skrivs året över.
+`sekomCol` = "färg"  | En sträng som sparar vilken SEKOM-grupp data har filtrerats från.
+`actualQty` = ("keyword", int) | En tupel där första elementet är en nyckeltalskod från [NYCKELTAL](#nyckeltal) och andra elementet ett heltal som motsvarar det faktiska antalet datapunkter som tagits med i plotten (dvs 1-290st).
+`expectedTot` = int | Ett heltal som representerar det antal datapunkter som förväntas plottas. Oftast 290st kommmuner, men ibland något mindre tal (eftersom vi ibland filtrerar på SEKOM-grupp).
+`showSekomAvg` = bool | Ett booleskt värde. Om True, kommer sekommedel att visas när [informUser()](#informuserargs-kommun) anropas.
+
+## informUser(args..., kommun)
+Skriver ut användarmeddelanden till stdOut.
+#### Returnerar:
+Ingenting, utom användarmeddelanden.
+#### Argumentbeskrivning:
+Lägg till valfritt antal argument som strängar, se tabellen. Specificera kommun="kommunnamn" sist, om du vill ha med detta. Om `kommun` är något annat än None eller False, letar funktionen efter given sträng i `missingMunis`, och skriver ut information om enbart denna kommun. Om inget hittas, utesluts meddelande.
+Är `kommun` istället None, eller helt utesluts, listas inga element från missingMunis.
+Är `kommun` istället False, skrivs alla element från missingMunis ut.
+
+Om `actualQty` har flera nycklar, skrivs dessa efter varandra.
+
+Använder du någon annan nyckel än nedan, kommer metoden ge ett felmeddelande.
+Rekommenderat att alltid specificera `missingData` och `succeededYears` tillsammans.
+Rekommenderat att alltid specificera `actualQty` och `expectedTot` tillsammans.
+
+Specificera argumenten i samma ordning du önskar ha felmeddelandena utskrivna.
+
+Argument | Användarmeddelande
+-------- | -----------
+`missingMunis` | "Data saknas för kommunen X." alternativt "Data saknas för kommunerna X,Y,..."
+`missingData` | "Relevant data saknas för nyckeltalet X år Y."
+`succeededYears` | "Visar istället data för nyckeltalet X år Y."
+`sekomCol` | "Visar kommuner från FÄRG kommungrupp." — men bara om `showSekomAvg` inte är med som argument.
+`actualQty` | "Visar data från X kommuner." om `expectedTot` inte är med som argument.
+`expectedTot` | Utan `actualQty` skrivs inget ut. Med denna: "Visar data från X av Y kommuner."
+`showSekomAvg` | "Oviktat medelvärde för nyckeltal N i FÄRG kommungrupp baserat på data från X av Y kommuner."
+
+## resetMissingMunis()
+Tömmer minnet på kommuner det saknas data för.
+#### Returnerar:
+Ingenting.
+#### Argumentbeskrivning:
+Inga argument.
+
+## reset()
+Tömmer minnet på all information. Används främst i olika tester.
+#### Returnerar:
+Ingenting.
+#### Argumentbeskrivning:
+Inga argument.
 
 ## MALL funktionsNamn(arg1, ..., argN)
 Beskrivning. Inkludera funktion, samt eventuellt "särbeteende".

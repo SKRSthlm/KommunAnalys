@@ -7,10 +7,10 @@ Denna sida innehåller följande delar:
 * [Funktioner i filen *API_anrop.py*](#funktioner-i-filen-api_anrop)
 * [Funktioner i filen *data_funcs.py*](#funktioner-i-filen-data_funcs)
 * [Funktioner i filen *InformationLog.py*](#funktioner-i-filen-informationlog)
+* [Funktioner i filen *plot_funcs.py*](#funktioner-i-filen-plot_funcs)
 * Funktioner i filen *diagram_classes.py*
 * Funktioner i filen *dropdowns.py*
 * Funktioner i filen *main.py*
-* Funktioner i filen *plot_funcs.py*
 
 **Här behöver vi ska vi göra om dessa till länkar till respektive rubrik**
 
@@ -24,7 +24,7 @@ Denna sida innehåller följande delar:
 Konstant, specificerar vilka år som inkluderas i datan från KOLADA. Enbart en sträng med år, separerade med komma-tecken. Åren dyker upp i dropdown-listorna i den ordning de står här.
 
 ## NYCKELTAL
-Konstant som specificerar vilka nyckeltal som inkluderas i datan från KOLADA. Enbart en sträng med nyckeltal (på formen N12345), separerade med komma-tecken. Se även nyckeltalsbeskrivningarna [här](#).
+Konstant som specificerar vilka nyckeltal som inkluderas i datan från KOLADA. Enbart en sträng med nyckeltal (på formen N12345), separerade med komma-tecken. Se även nyckeltalsbeskrivningarna [här](#globala-uppslagsverk).
 
 ## write_json_to_file(name, d):
 Konverterar d till en JSON-formaterad sträng och skriver detta till en fil med det specificerade namnet. Observera att filen ska vara skapad innan.
@@ -233,6 +233,8 @@ Argument | Beskrivning
 -------- | -----------
 `args` | Vilket antal listor som helst. Funktionen är testad för en, två och tre listor som input.
 
+
+
 ----
 
 # Funktioner i filen *InformationLog*
@@ -302,6 +304,75 @@ Ingenting.
 #### Argumentbeskrivning:
 Inga argument.
 
+
+
+----
+
+# Funktioner i filen *plot_funcs*
+
+## Globala uppslagsverk
+I *plot_funcs* laddas data in från filer till olika variabler som används på flera ställen.
+
+Variabel  | Beskrivning
+-------   | ----------
+`mdata` | All data på kommunnivå, från filen *MasterData.txt*. Se även [API_Anrop](#funktioner-i-filen-api_anrop).
+`riket_data` | All data på riksnivå, från filen *riket.txt*. Se även [API_Anrop](#funktioner-i-filen-api_anrop).
+`sekom_data` | Vilka SEKOM-grupper alla kommuner tillhör, från filen *sekom.json*. Kommunnamn som nycklar, SEKOM-gruppfärg som data.
+`key_to_desc` | Nyckeltalskoder som nycklar, strängar med nyckeltalsbeskrivningar som data. Används på diverse platser, tex etiketter på plottar. Behöver uppdateras manuellt när ett nyckeltal läggs till.
+`desc_to_key`| `key_to_desc` i omvänd ordning, dvs nycklar och data har bytt plats.
+
+## *Följande beskrivningar specificerar metoder för Plot-klassen*
+
+## init()
+Instansierar en instans av plotlys Figure-klass. Inga argument.
+
+## clear()
+Tömmer instansens diagram-yta och "glömmer" alla inställningar, dataserier och grafiska element. Inga argument.
+
+## show()
+Renderar dataserier och grafiska element med givna inställningar i en diagram-yta. Inga argument.
+
+## plot_line(x_0, y_0, x_1, y_1, col, line_width, line_type)
+Skapar en linje att rita på diagramytan.
+#### Returnerar:
+Ingenting.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`x_0` & `y_0` | Startpunkt
+`x_1` & `y_1` | Ändpunkt
+`col` | En CSS-färg eller HEXkod som sträng. Standard är CSS "black".
+`line_width`| Linjens tjocklek i pixlar. Standard är 1px.
+`line_type`| En av “solid”, “dot” eller “dashdot”. Standard "solid".
+
+## add_def(Diagram,RikeAvg):
+Skriver ut "lådor" med text på diagramytan. Skrev aldrig om till en bättre, generell funktion.
+#### Returnerar:
+Ingenting.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`Diagram` | True eller False. Om True visas "Den sträckade linjen visar rikets medel: X %". Om False visas "Flickor har högre resultat än pojkar" respektive "Pojkar har högre resultat än flickor".
+`RikeAvg` | X:et i rikets medel ovan.
+
+## add_scatter(data_x, data_y, data_text, colors, xlabel, ylabel)
+Skapar en scatter-plot-serie att rendera.
+#### Returnerar:
+Inget.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+data_x | En lista med data plottad längst x-axeln
+data_y | En lista med data plottad längst y-axeln
+data_text | En lista med strängar som ska visas som fetstilad rubrik i hover-etiketten.
+colors | En lista med strängar, representerar vilken färg respektive datapunkt ska ha.
+xlabel | Sträng som visas i hover-etiketten, innan x-värdet
+ylabel | Sträng som visas i hover-etiketten, innan y-värdet
+
+
 ## MALL funktionsNamn(arg1, ..., argN)
 Beskrivning. Inkludera funktion, samt eventuellt "särbeteende".
 #### Returnerar:
@@ -311,6 +382,7 @@ Beskriv vad funktionen returnerar. Beskriv specialfall. Eventuellt ett exempel, 
 Argument | Beskrivning
 -------- | -----------
 `argumentNamn` | Beskrivning. Inkludera typ (sträng, int, ...), samt eventuella ytterligare krav.
+
 
 
 [Tillbaka](README.md) till startsidan.

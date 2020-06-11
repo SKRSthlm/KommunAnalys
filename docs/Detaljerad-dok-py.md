@@ -1,11 +1,11 @@
 # Detaljerad dokumentation Python
-*Uppdaterad 21e maj 2020.*
+*Uppdaterad 11e juni 2020.*
 
 Här har vi dokumenterat all kod vi skrivit i python för det här projektet. Python används i all kod som hämtar data från KOLADAs API, manipulerar data, skapar diagram, skapar dropdowns och hanterar fel. Läs [här](generell-dok.md) för mer information om hur och var dessa funktioner och metoder används.
 
 Denna sida innehåller följande delar:
-* [Funktioner i filen *API_anrop.py*](#funktionerifilenapi_anrop)
-* [Funktioner i filen *data_funcs.py*](#funktionerifilendata_funcs)
+* [Funktioner i filen *API_anrop.py*](#funktioner-i-filen-api_anrop)
+* [Funktioner i filen *data_funcs.py*](#funktioner-i-filen-data_funcs)
 * Funktioner i filen *InformationLog.py*
 * Funktioner i filen *diagram_classes.py*
 * Funktioner i filen *dropdowns.py*
@@ -25,7 +25,7 @@ Konstant, specificerar vilka år som inkluderas i datan från KOLADA. Enbart en 
 Konstant som specificerar vilka nyckeltal som inkluderas i datan från KOLADA. Enbart en sträng med nyckeltal (på formen N12345), separerade med komma-tecken. Se även nyckeltalsbeskrivningarna [här](#).
 
 ## write_json_to_file(name, d):
-Konverterar d till en JSON-formatterad sträng och skriver detta till en fil med det specificerarde namnet. Observera att filen ska vara skapad innan.
+Konverterar d till en JSON-formaterad sträng och skriver detta till en fil med det specificerade namnet. Observera att filen ska vara skapad innan.
 #### Returnerar:
 Returnerar ingenting, men skriver till specificerad fil.
 #### Argumentbeskrivning:
@@ -38,7 +38,6 @@ Argument | Beskrivning
 
 ## link_municipalities_to_id()
 Hämtar kommunernas ID-nr och deras faktiska namn, och skapar ett uppslagsverk med denna info.
-Return: a python dictionary over this mapping, as well as the id-number for the whole country as a string.
 #### Returnerar:
 Returnerar ett uppslagsverk med kommun-ID:n som nycklar och kommunnamn som värden, samt ID:t för riksdata.
 #### Argumentbeskrivning:
@@ -57,9 +56,9 @@ Argument | Beskrivning
 
 
 ## all_kolada_calls(ID_map, country_id)
-Anropar [kolada_call_by_municipality](#koladacallbymunicipality) för varje ID som genereras av [link_municipalities_to_id](#linkmunicipalitiestoid), samt för rikets ID.
+Anropar [kolada_call_by_municipality](#kolada_call_by_municipalityid) för varje ID som genereras av [link_municipalities_to_id](#link_municipalities_to_id), samt för rikets ID.
 #### Returnerar:
-Returnerar två uppslagsverk, ett med kommunnamn som nycklar och alla uppslagsverk med data som data. Det andra är rikets data, strukturerat på samma sätt som ett uppslagsverk från [kolada_call_by_municipality](#koladacallbymunicipality).
+Returnerar två uppslagsverk, ett med kommunnamn som nycklar och alla uppslagsverk med data som data. Det andra är rikets data, strukturerat på samma sätt som ett uppslagsverk från [kolada_call_by_municipality](#kolada_call_by_municipalityid).
 #### Argumentbeskrivning:
 
 Argument | Beskrivning

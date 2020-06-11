@@ -2,7 +2,7 @@
 Välkommen till dokumentationen av detta projekt.
 ## Innehåll:
 ### Guider:
-* Att ladda ner och använda Jupyter Notebook på din dator
+* Att ladda ner och använda Jupyter Notebook på din dator (Installera_jupyterNotebook.md)
 * Introduktion till att ändra och uppdatera data
 * Introduktion till att skapa nya diagram
 ### Dokumentation:

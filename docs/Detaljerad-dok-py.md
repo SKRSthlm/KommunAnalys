@@ -8,8 +8,8 @@ Denna sida innehåller följande delar:
 * [Funktioner i filen *data_funcs.py*](#funktioner-i-filen-data_funcs)
 * [Funktioner i filen *InformationLog.py*](#funktioner-i-filen-informationlog)
 * [Funktioner i filen *plot_funcs.py*](#funktioner-i-filen-plot_funcs)
+* [Funktioner i filen *dropdowns.py*](#funktioner-i-filen-dropdowns)
 * Funktioner i filen *diagram_classes.py*
-* Funktioner i filen *dropdowns.py*
 * Funktioner i filen *main.py*
 
 **Här behöver vi ska vi göra om dessa till länkar till respektive rubrik**
@@ -480,6 +480,28 @@ Argument | Beskrivning
 `x_1` & `y_1` | Ändpunkt
 `col` | En CSS-färg eller HEXkod som sträng. Standard är CSS "black".
 `line_width` | Linjens bredd. Standard är 1px.
+
+----
+
+# Funktioner i filen *dropdowns*
+
+## init(ops, desc)
+Skapar en Dropdown-instans med givna alternativ.
+#### Returnerar:
+Instansen.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`ops` | En lista med strängar, där varje sträng blir ett alternativ i dropdown-listan.
+`desc` | Etikett som visas till vänster om dropdown-listan. Sträng.
+
+## get()
+Returnerar dropdown-instansen själv. Skickas till andra funktioner som argument.
+#### Returnerar:
+Instansen.
+#### Argumentbeskrivning:
+Inga argument.
 
 
 ## MALL funktionsNamn(arg1, ..., argN)

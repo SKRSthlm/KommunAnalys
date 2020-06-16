@@ -365,12 +365,121 @@ Inget.
 
 Argument | Beskrivning
 -------- | -----------
-data_x | En lista med data plottad längst x-axeln
-data_y | En lista med data plottad längst y-axeln
-data_text | En lista med strängar som ska visas som fetstilad rubrik i hover-etiketten.
-colors | En lista med strängar, representerar vilken färg respektive datapunkt ska ha.
-xlabel | Sträng som visas i hover-etiketten, innan x-värdet
-ylabel | Sträng som visas i hover-etiketten, innan y-värdet
+`data_x` | En lista med data plottad längst x-axeln (tänk på detta som punkternas x-koordinat)
+`data_y` | En lista med data plottad längst y-axeln (tänk på detta som punkternas y-koordinat)
+`data_text` | En lista med strängar som ska visas som fetstilad rubrik i hover-etiketten.
+`colors` | En lista med strängar, representerar vilken färg respektive datapunkt ska ha.
+`xlabel` | Sträng som visas i hover-etiketten, innan x-värdet
+`ylabel` | Sträng som visas i hover-etiketten, innan y-värdet
+
+## add_bar(data_x, data_y, colors, x_ticks, text, show_legend, legend_name)
+Skapar en bar-plot-serie att rendera.
+#### Returnerar:
+Inget.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`data_x` | En lista med data plottad längst x-axeln (tänk på detta som staplarnas namn)
+`data_y` | En lista med data plottad längst y-axeln (tänk på detta som staplarnas höjd)
+`colors` | En lista med strängar, representerar vilken färg respektive stapel ska ha.
+`x_ticks` | Booleskt värde för att visa markörer längst x-axeln. Standard är False.
+`text` | En lista med strängar som ska visas som fetstilad rubrik i hover-etiketten, standard är en tom sträng.
+`show_legend` | Booelskt värde för att visa legend, dvs rutan som visar vilken dataserie som är vilken. Standard är False.
+`legend_name` | En sträng som visas som dataseriens rubrik i legend-rutan. Standard är en tom sträng.
+
+## add_title(title, x_title, y_title)
+Lägg till eller skriv över titlar i ett diagram.
+#### Returnerar:
+Inget.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`title` | Ny titel som sträng.
+`x_title` | Ny titel på x-axeln, som sträng. Utelämnas denna tas nuvarande titel bort.
+`y_title` | Ny titel på y-axeln, som sträng. Utelämnas denna tas nuvarande titel bort.
+
+## format_layout(show_x_grid, show_y_grid)
+Uppdaterar utseendet på diagram-ytan: titeln (storlek, centrering), font (storlek, färg, typ), x- och y-axlar (färg, bredd, markörer, grid, etc) och ett flertal till visuella element.
+Används för att få alla diagram att ha liknande utseende.
+#### Returnerar:
+Inget.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`show_x_grid` | Booelskt värde. Om True visas en vertikal linje vid varje x-markör. Standard är falskt.
+`show_y_grid` | Booelskt värde. Om True visas en vertikal linje vid varje y-markör. Standard är falskt.
+
+## show_zero_line()
+Lägger till en linje för alla värden där x (eller y) är noll. Bra att visa när diagrammet både har positiva och negativa värden.
+#### Returnerar:
+Inget.
+#### Argumentbeskrivning:
+Inga argument.
+
+## format_size(width, height)
+Ändra dimensionerna på diagram-ytan.
+#### Returnerar:
+Inget.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`width` | Ny bredd på ytan, i pixlar.
+`height` | Ny höjd på ytan, i pixlar.
+
+
+## format_x_axis(x_tick, x_limits)
+Ändra x-axelns omfattning.
+#### Returnerar:
+Inget.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`x_tick` | Ange bredden mellan markörerna på x-axeln, i relativa värden gentemot dataseriens värden (alltså ej i pixlar)
+`x_limits`| En tupel (m,M) där m är minsta värde för x-axeln och M är största
+
+## format_y_axis(y_tick, y_limits)
+Ändra y-axelns omfattning.
+#### Returnerar:
+Inget.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`y_tick` | Ange bredden mellan markörerna på y-axeln, i relativa värden gentemot dataseriens värden (alltså ej i pixlar)
+`y_limits`| En tupel (m,M) där m är minsta värde för y-axeln och M är största
+
+
+## edit_toolbar(filename, format, height,width)
+Ändrar inställningar i verktygslådan som visas i toppen av diagram-ytan.
+#### Returnerar:
+Beskriv vad funktionen returnerar. Beskriv specialfall. Eventuellt ett exempel, om rimligt/hjälpsamt.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`filename` | En sträng som specificerar namnet på filen som laddas när när "save plot"-ikonen aktiveras.
+`format`| En av “png”, “svg”, “jpeg”, “webp”,  specificerar filtypen som laddas när när "save plot"-ikonen aktiveras.
+`height`| Höjden på filen som laddas ner. Standard är 750px.
+`width`| Bredden på filen som laddas ner. Standard är 1050px.
+
+## dotted_line(legend_text, x_0, y_0, x_1, y_1, col, line_width):
+Lägger till en streckad linje på diagram-ytan. Skiljer sig från [plot_line](#plot_line-x_0-y_0-x_1-y_1-col-line_width-line_type) genom att vara implementerad som en scatter-data-serie. Har därför en bättre etikett om linjen behöver visa ett specifikt värde.
+#### Returnerar:
+Inget.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`legend_text` | En sträng som visas som linjens rubrik/beskrivning i legend-rutan.
+`x_0` & `y_0` | Startpunkt
+`x_1` & `y_1` | Ändpunkt
+`col` | En CSS-färg eller HEXkod som sträng. Standard är CSS "black".
+`line_width` | Linjens bredd. Standard är 1px.
 
 
 ## MALL funktionsNamn(arg1, ..., argN)
@@ -382,7 +491,6 @@ Beskriv vad funktionen returnerar. Beskriv specialfall. Eventuellt ett exempel, 
 Argument | Beskrivning
 -------- | -----------
 `argumentNamn` | Beskrivning. Inkludera typ (sträng, int, ...), samt eventuella ytterligare krav.
-
 
 
 [Tillbaka](README.md) till startsidan.

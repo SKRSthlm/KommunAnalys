@@ -1,4 +1,5 @@
-# Installera Git
+# Introduktion till Git och GitHub Desktop
+*Uppdaterad 17e juni 2020.*
 
 Att ändra på data i KommunAnalys betyder att man måste använda versionhanteringsprogrammet [Git](https://sv.wikipedia.org/wiki/Git_(datorprogram)). I vanliga fall så används Git främst med kommandotolken/terminalarbete men vi kommer här göra en guide där ni kan använda en version av Git som heter GitHub Desktop som har ett grafiskt gränssnitt. För att installera det på Windows 10 och Mac följ respektive guide nedan.
 
@@ -18,7 +19,9 @@ Att ändra på data i KommunAnalys betyder att man måste använda versionhanter
 
 ### Mac
 
-##Arbetsflöde
+SKA FYLLAS I.
+
+## Arbetsflöde
 
 Tanken med Git och portalen GitHub (som lagrar projekt) är att det ska vara lätt för människor att delta och bidra till mjukvaruprojekt genom att klona filerna till sitt eget konto, ändra på något och sedan skicka in den ändringen, vilket i Git kallas för *commit* eller på svengelska att *commita*. Finessen med detta är att alla tidigare versioner av projektet sparas och man kan lätt se vilka commits som har gjorts och vad de exakt ändrade. Låt oss gå igenom en snabb översikt av gränssnittet.
 
@@ -32,7 +35,7 @@ Tanken med Git och portalen GitHub (som lagrar projekt) är att det ska vara lä
 
 ### Exempel
 
-1. Säg att vi göra en ändring. Vi börjar då med att klicka på *Show in Explorer* och får upp vår projektmapp. ![Projektmappen på datorn](/pictures/InstallingGit/Windows_9_GitHubDesktopExempelFolder.png)
+1. Säg att vi vill göra en ändring där vi lägger till en textfil som heter *test.txt*. Vi börjar då med att klicka på *Show in Explorer* och får upp vår projektmapp. ![Projektmappen på datorn](/pictures/InstallingGit/Windows_9_GitHubDesktopExempelFolder.png)
 2. Sedan skapar vi en fil som heter *test.txt*. Vi dubbeklickar på den och skriver *Det här är en testfil*, sparar och stänger filen. ![Skapat en testfil](/pictures/InstallingGit/Windows_10_GitHubDesktopExempelFile.png)
 3. Om vi nu går tillbaka till GitHub Desktop kommer vi se följande: ![GitHub Desktop har uppdaterat och visar den nya filen](/pictures/InstallingGit/Windows_11_GitHubDesktopTestFile.png)
 4. Om vi nu vill att denna fil ska läggas till så hade vi skrivit en rubrik i fältet tidigare benämnt som 1a och sedan tryckt på *commit to master*.
@@ -42,6 +45,8 @@ Det viktiga att förstå är att alla ändringar som görs måste commitas och s
 
 Som synes så finns det också en checkbox bredvid *test.txt* och syftet med detta är att om du har gjort många ändringar så kanske du vill göra flera commits där innehållet i varje commits följer ett tema. Säg att du har gjort en massa kod-ändringar men också en massa guider. Då kanske du vill bocka i alla ändringar som har med kod att göra i en commit och därefter gör du en till commit som bara berör guiderna.
 
-**ETT VARNINGENS ORD:** Se till att aldrig vara två eller fler personer som arbetar med samma fil samtidigt, för detta kan ställa till problem. Utan arbetsflödet bör vara när två eller flera personer vill arbeta med samma fil: *Person 1 meddelar att denne ska göra ändringar i fil XXX -> Person 1 gör sina ändringar -> Person 1 commitar ändringarna och meddelar att denne är klar -> Person 2 uppdaterar sitt projekt genom att trycka på **Fetch Origin** (benämnd som 5 ovan) -> Person 2 gör sina ändringar -> ... -> Person N commitar sina ändringar och meddelar att denne är klar*. Följer man detta arbetsflöde så kommer man undvika mycket huvudvärk.
+**ETT VARNINGENS ORD:** Se till att aldrig vara två eller fler personer som arbetar med samma fil samtidigt, för detta kan ställa till problem. Utan arbetsflödet bör vara när två eller flera personer vill arbeta med samma fil: *Person 1 meddelar att denne ska göra ändringar i fil XXX -> Person 1 gör sina ändringar -> Person 1 commitar ändringarna och meddelar att denne är klar -> Person 2 uppdaterar sitt projekt genom att trycka på 'Fetch Origin' (benämnd som 5 ovan) -> Person 2 gör sina ändringar -> ... -> Person N commitar sina ändringar och meddelar att denne är klar*. Följer man detta arbetsflöde så kommer man undvika mycket huvudvärk.
 
 Det går såklart att arbeta på *olika* filer samtidigt projektet utan problem. Så om Person 1 håller på med fil X och person 2 håller på med fil Y så är inte det några problem. Problemen uppstår när två eller flera personer arbetar och ändrar på samma fil samtidigt.
+
+[Tillbaka](README.md) till startsidan.

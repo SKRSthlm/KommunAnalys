@@ -4,7 +4,7 @@
 *Denna guide förutsätter att både Python och GitHub Desktop är installerade. Om Python inte är installerat kan du följa stegen för att göra detta i guiden [Att ladda ner och använda Jupyter Notebook på din dator](Installera_jupyterNotebook.md) och GitHub Desktop kan installeras med hjälp av guiden [Introduktion till Git och GitHub Desktop](git.md).*
 
 1. För att det ska gå att uppdatera Datan för Notebooken måste vi säkerställa att paketet *requests* är installerat för python. Det görs genom att öppna kommandotolken och skriva `pip install requests`. ![Installera paketet requests](/pictures/AndraData/Windows_1_PipRequests.png)
-2. Om du inte ämnar att lägga till nya *Nyckeltal* eller *År* till Notebooken utan bara vill hämta all den senaste datan kan du hoppa till STEG ?.
+2. Om du inte ämnar att lägga till nya *Nyckeltal* eller *År* till Notebooken utan bara vill hämta all den senaste datan kan du hoppa till steg 8.
 3. Därefter så använder du GitHub Desktop för att öppna var KommunAnalys ligger på din dator. ![KommunAnalys](/pictures/AndraData/Windows_2_Folder.png)
 4. Gå sedan in i mappen *src* och öppna filen *Api_Anrop.py* i en texteditor. På Windows kan du använda *Anteckningar/Notepad*.
 5. Det som kan ändras är det inom det markerade området. ![Koden i Api_Anrop](/pictures/AndraData/Windows_3_Anrop.png)

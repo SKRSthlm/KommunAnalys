@@ -45,22 +45,22 @@ Nu är allt vi behöver installerat för Windows 10.
 ## Mac
 
 1. Vårt första steg är att öppna upp terminalen, (Även kallad kommandotolken). Från terminalen kommer vi göra en mängd installationer och det är även här ifrån som vi kommer att jupyter notebook. För att enklast hitta terminalen öppna upp launchpad !(/pictures/InstallJupyterNotebook/Mac_launchpad.png)
-2. Sök sedan i sökfältet i launchpaden efter programmet Terminal. !(/pictures/InstallJupyterNotebook/Mac_terminal.png). 
-3. Öppna sedan upp detta program, Då ser man något i still med detta !(/pictures/InstallJupyterNotebook/Mac_myterminal.png)
+2. Sök sedan i sökfältet i launchpaden efter programmet Terminal. ![](/pictures/InstallJupyterNotebook/Mac_terminal.png). 
+3. Öppna sedan upp detta program, Då ser man något i still med detta ![](/pictures/InstallJupyterNotebook/Mac_myterminal.png)
 4. Vårt nästa steg är att undersöka om programmering språket ![Python](https://en.wikipedia.org/wiki/Python_(programming_language)) är installerat på datorn. 
-5. Nu kommer terminalen upp. För att kontrollera om Python redan är installerat skriver du `python --version` och trycker på enter-tangenten. Om du har Python installerat kommer du se ett versionsnummer och du kan hoppa till steg 13. !(/pictures/InstallJupyterNotebook/Mac_python_installerat.png)
+5. Nu kommer terminalen upp. För att kontrollera om Python redan är installerat skriver du `python --version` och trycker på enter-tangenten. Om du har Python installerat kommer du se ett versionsnummer och du kan hoppa till steg 13. ![](/pictures/InstallJupyterNotebook/Mac_python_installerat.png)
 Om Python inte är installerat så kommer ingenting att hända. //bild på det 
-6. Detta betyder att vi måste ladda ner språket. Gå sedan till https://www.python.org och klicka på knappen Downloads och välj Mac OS X !(/pictures/InstallJupyterNotebook/Mac_python_install_1.png) 
+6. Detta betyder att vi måste ladda ner språket. Gå sedan till https://www.python.org och klicka på knappen Downloads och välj Mac OS X ![](/pictures/InstallJupyterNotebook/Mac_python_install_1.png) 
 7. Scrolla sedan ned till du hittar en version av Python med versionsnummer 3.7.X där X exempelvis är 5 som i nuläget när guiden skrivs. Det går INTE att använda en version som är 3.8.X av den enkla anledningen att den version av Jupyter Notebook och Voila som vi använder inte stöds av Python version 3.8.X eller senare i nuläget. 
-8.Välj sedan filen som överrensstämmer med markeringen i bilden och spara den till ditt skrivbord. Vi väljer den understa av dessa som heter `Download macOS 64-bit installer`. Men det hade fungerat lika bra att ta den översta som heter `Download macOS 64-bit/32-bit installer`  !(/pictures/InstallJupyterNotebook/Mac_python_install_2.png)    
-9. När man klickar på till exempel den som heter `Download macOS 64-bit installer` kommer denna rutan upp. Se till att den är i kryssad så att `öppna med installer` !(/pictures/InstallJupyterNotebook/Mac_python_install_3.png)
-10. Då kommer detta upp och då är nästa steg att följa installations stegen för att installera python. !(/pictures/InstallJupyterNotebook/Mac_python_install_4.png)
+8.Välj sedan filen som överrensstämmer med markeringen i bilden och spara den till ditt skrivbord. Vi väljer den understa av dessa som heter `Download macOS 64-bit installer`. Men det hade fungerat lika bra att ta den översta som heter `Download macOS 64-bit/32-bit installer`  ![](/pictures/InstallJupyterNotebook/Mac_python_install_2.png)    
+9. När man klickar på till exempel den som heter `Download macOS 64-bit installer` kommer denna rutan upp. Se till att den är i kryssad så att `öppna med installer` ![](/pictures/InstallJupyterNotebook/Mac_python_install_3.png)
+10. Då kommer detta upp och då är nästa steg att följa installations stegen för att installera python. ![](/pictures/InstallJupyterNotebook/Mac_python_install_4.png)
 11. Sedan är det bara att vänta tills installationen är klar. 
 12. Kontrollera att Python är installerat genom att repetera steg 4 och 5.
 13. Vi behöver även installera något som heter [Node.js](https://en.wikipedia.org/wiki/Node.js).
 14. För att göra detta behöver ni först gå till [https://nodejs.org/en/download/](https://nodejs.org/en/download/) och välja *64-bit* versionen.
-15. Väl på Node.js nedladdningssida så ska macOS installer väljas !(/pictures/InstallJupyterNotebook/Mac_nodejs_install_1.png)
-16. Då kommer denna ruta upp. Se till att den är i kryssad så att `öppna med installer` !(/pictures/InstallJupyterNotebook/Mac_nodejs_install_2.png)
+15. Väl på Node.js nedladdningssida så ska macOS installer väljas ![](/pictures/InstallJupyterNotebook/Mac_nodejs_install_1.png)
+16. Då kommer denna ruta upp. Se till att den är i kryssad så att `öppna med installer` ![](/pictures/InstallJupyterNotebook/Mac_nodejs_install_2.png)
 17 Nästa steg att följa installations stegen för att installera node.js.
 18. Sedan är det bara att vänta tills installationen är klar. 
 19. Hädanefter kommer vi att arbeta mycket i terminalen så öppna den genom att följa början av steg 1 till 3.
@@ -70,10 +70,10 @@ Om Python inte är installerat så kommer ingenting att hända. //bild på det
 23. När detta är klart behöver vi installera ett tillägg till Python som heter [Plotly](https://en.wikipedia.org/wiki/Plotly).
 24. Detta görs genom terminalen och kommandot `pip install plotly v1.1.4`. Där v1.1.4 står för vilken version av plotly vi ska använda. Denna installation kan ta några minuter och vid vissa tidpunkter ser det ut som att det inte händer något. Ha tålamod. ![Installera Plotly](/pictures/InstallJupyterNotebook/Mac_Plotly_install.png)
 25. För att Jupyter Labs ska rendera vår notebook korrekt måste vi installera de 2 följande extensions. 
-	1.`jupyter labextension install @jupyter-widgets/jupyterlab-manager v1.0.3` där v1.0.3 står för versionen av denna labextensionen så att de fungerar med plotly korrekt. Denna installation kan ta några minuter och vid vissa tidpunkter ser det ut som att det inte händer något. Ha tålamod.  !(/pictures/InstallJupyterNotebook/Mac_labEx1.png)
-	2. `jupyter labextension install @jupyterlab/plotly-extension v1.0.0` där v1.0.0 står för versionen av denna labextensionen så att de fungerar med plotly korrekt.Denna installation kan ta några minuter och vid vissa tidpunkter ser det ut som att det inte händer något. Ha tålamod. !(/pictures/InstallJupyterNotebook/Mac_labEx2.png)
+	1.`jupyter labextension install @jupyter-widgets/jupyterlab-manager v1.0.3` där v1.0.3 står för versionen av denna labextensionen så att de fungerar med plotly korrekt. Denna installation kan ta några minuter och vid vissa tidpunkter ser det ut som att det inte händer något. Ha tålamod.  ![](/pictures/InstallJupyterNotebook/Mac_labEx1.png)
+	2. `jupyter labextension install @jupyterlab/plotly-extension v1.0.0` där v1.0.0 står för versionen av denna labextensionen så att de fungerar med plotly korrekt.Denna installation kan ta några minuter och vid vissa tidpunkter ser det ut som att det inte händer något. Ha tålamod. ![](/pictures/InstallJupyterNotebook/Mac_labEx2.png)
 26. Då Jupyter Notebook-dokumentet KommunAnalys använder ett tillägg som heter [Voilà](https://blog.jupyter.org/and-voil%C3%A0-f6a2c08a4a93) måste vi även installera detta för att det ska gå att köra KommunAnalys lokalt. Detta görs genom kommandot `pip install voila`. ![Installera tillägget Voilà till Jupyter Notebook](/pictures/InstallJupyterNotebook/Mac_Voila.png)
-27. När detta är gjort är sista steget att skriva in i terminalen `jupyter lab` för att öppna jupyter lab i ett internet fönster. Standard är att den öppnar jupytern i safari. men man kan kopiera URLen och klistra in den i firefox eller google chrome om man vill. !(/pictures/InstallJupyterNotebook/Mac_jupyter_start.png) (/pictures/InstallJupyterNotebook/Mac_jupyter_url.png)
-28. När du känner dig klar med arbetet så kan du stänga ner jupytern genom att trycka `ctrl+c` och sedan trycka `y` och enter i terminalen.  !(/pictures/InstallJupyterNotebook/Mac_close.png)
+27. När detta är gjort är sista steget att skriva in i terminalen `jupyter lab` för att öppna jupyter lab i ett internet fönster. Standard är att den öppnar jupytern i safari. men man kan kopiera URLen och klistra in den i firefox eller google chrome om man vill. ![](/pictures/InstallJupyterNotebook/Mac_jupyter_start.png) (/pictures/InstallJupyterNotebook/Mac_jupyter_url.png)
+28. När du känner dig klar med arbetet så kan du stänga ner jupytern genom att trycka `ctrl+c` och sedan trycka `y` och enter i terminalen.  ![](/pictures/InstallJupyterNotebook/Mac_close.png)
 
 Nu är allt vi behöver installerat för Mac.

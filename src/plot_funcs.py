@@ -5,15 +5,15 @@ import os
 data_path = os.path.join(os.getcwd(),os.path.dirname(__file__)) + '/../data/'
 
 ##with open('../data/MasterData.txt') as f:
-with open(data_path + 'MasterData.txt') as f:
+with open(data_path + 'MasterData.txt', encoding='utf-8') as f:
     mdata = json.load(f,  object_pairs_hook=OrderedDict)
 
 ##with open('../data/riket.txt') as f:
-with open(data_path + 'riket.txt') as f:
+with open(data_path + 'riket.txt', encoding='utf-8') as f:
     riket_data = json.load(f)
 
 ##with open('../data/sekom.json') as f:
-with open(data_path + 'sekom.json') as f:
+with open(data_path + 'sekom.json', encoding='utf-8') as f:
     sekom_data = json.load(f)
 
 key_to_desc = {

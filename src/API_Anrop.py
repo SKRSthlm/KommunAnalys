@@ -14,7 +14,7 @@ def write_json_to_file(Name, a_dict):
     Converts a dict to JSON-format and writes to file.
     """
 
-    json_format = json.dumps(a_dict)
+    json_format = json.dumps(a_dict, ensure_ascii=False).encode('utf8').decode()
     f = open(Name,"w",encoding="utf-8")
     f.write(json_format)
     f.close()

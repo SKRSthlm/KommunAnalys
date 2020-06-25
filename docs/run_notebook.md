@@ -11,7 +11,7 @@
 4. Sedan skriver du `cd` följt av ett mellanslag och sedan klistrar du in sökvägen som du kopierade tidigare. Det bör då se ut något som följande dvs. `cd [SÖKVÄG]` (*cd* står för *change directory*). ![Sökväg i Kommandotolken](/pictures/RunGit/Windows_2_CmdPath.png).
 5. Tryck på `Enter-tangenten` för att utföra kommandot.
 
-Nu kan du välja om du vill bara se hur Jupyter Notebooken ser ut genom att använda *Voila* eller om du faktiskt vill ändra ngåot i Jupyter Notebooken genom att använda *Jupyter Lab*. Skillnaden mellan de båda är att om du använder Voila så kommer slutprodukten visas där du inte kan ändra någonting. Om du vill ändra saker och ting så ska du därför starta notebooken i Jupyter Lab där du kommer att se all kod.
+Nu kan du välja om du vill bara se hur Jupyter Notebooken ser ut genom att använda *Voila* eller om du faktiskt vill ändra något i Jupyter Notebooken genom att använda *Jupyter Lab*. Skillnaden mellan de båda är att om du använder Voila så kommer slutprodukten visas där du inte kan ändra någonting. Om du vill ändra saker och ting så ska du därför starta notebooken i Jupyter Lab där du kommer att se all kod.
 
 ### Voila
 1. För att öppna den i *Voila* skriver du `voila main_voila.ipynb` och trycker enter. Din webbläsare ska då startas och visa hur notebooken ser ut.

@@ -1,4 +1,5 @@
 # Installation av Jupyter Notebook
+*Uppdaterad 25e juni 2020.*
 
 Denna guide ämnar att visa stegen för att installera Jupyter Notebook på Windows -och Mac-datorer.
 
@@ -41,6 +42,8 @@ Denna guide ämnar att visa stegen för att installera Jupyter Notebook på Wind
 
 Nu är allt vi behöver installerat för Windows 10.
 
+[Tillbaka](README.md) till startsidan.
+
 
 ## Mac
 
@@ -49,7 +52,7 @@ Nu är allt vi behöver installerat för Windows 10.
 3. Öppna sedan upp detta program, Då ser man något i still med detta ![](/pictures/InstallJupyterNotebook/Mac_myterminal.png)
 4. Vårt nästa steg är att undersöka om programmering språket ![Python](https://en.wikipedia.org/wiki/Python_(programming_language)) är installerat på datorn. 
 5. Nu kommer terminalen upp. För att kontrollera om Python redan är installerat skriver du `python --version` och trycker på enter-tangenten. Om du har Python installerat kommer du se ett versionsnummer och du kan hoppa till steg 13. ![](/pictures/InstallJupyterNotebook/Mac_python_installerat.png)
-Om Python inte är installerat så kommer ingenting att hända. //bild på det 
+Om Python inte är installerat så kommer ingenting att hända.
 6. Detta betyder att vi måste ladda ner språket. Gå sedan till [https://www.python.org](https://www.python.org) och klicka på knappen Downloads och välj Mac OS X ![](/pictures/InstallJupyterNotebook/Mac_python_install_1.png) 
 7. Scrolla sedan ned till du hittar en version av Python med versionsnummer 3.7.X där X exempelvis är 5 som i nuläget när guiden skrivs. Det går INTE att använda en version som är 3.8.X av den enkla anledningen att den version av Jupyter Notebook och Voila som vi använder inte stöds av Python version 3.8.X eller senare i nuläget. 
 8.Välj sedan filen som överrensstämmer med markeringen i bilden och spara den till ditt skrivbord. Vi väljer den understa av dessa som heter `Download macOS 64-bit installer`. Men det hade fungerat lika bra att ta den översta som heter `Download macOS 64-bit/32-bit installer`  ![](/pictures/InstallJupyterNotebook/Mac_python_install_2.png)    
@@ -77,3 +80,5 @@ Om Python inte är installerat så kommer ingenting att hända. //bild på det
 28. När du känner dig klar med arbetet så kan du stänga ner jupytern genom att trycka `ctrl+c` och sedan trycka `y` och enter i terminalen.  ![](/pictures/InstallJupyterNotebook/Mac_close.png)
 
 Nu är allt vi behöver installerat för Mac.
+
+[Tillbaka](README.md) till startsidan.

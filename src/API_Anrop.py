@@ -6,7 +6,7 @@ import time
 # Programmet tar ~15-20 min att köra, körs bara vid ny inhämtning av data från kolada.
 
 NYCKELTAL = "N15419,N15505,N15436,U15461,N15485,N15488,N15574,N15573,N15572,N15571,N15570,N15569,N15814,N15034,N15008,N15902,N15823,N15820"
-YEARS = "2019,2018,2017,2016"
+YEARS = "2020,2019,2018,2017,2016"
 
 
 def write_json_to_file(Name, a_dict):
@@ -26,7 +26,7 @@ def link_municipalities_to_id():
     and does the same for the whole country.
     """
 
-    URL = "http://api.kolada.se/v2/municipality" 
+    URL = "http://api.kolada.se/v2/municipality"
     municipality_map = dict()
     kommun_info = requests.get(URL).json()
 
@@ -35,9 +35,9 @@ def link_municipalities_to_id():
             municipality_map[post["id"]] = post["title"]
         elif post["title"] == "Riket":
             country_id = post["id"]
-    
+
     return municipality_map,country_id
-    
+
 
 def kolada_call_by_municipality(ID):
     """
@@ -53,14 +53,14 @@ def kolada_call_by_municipality(ID):
         year = post['period']
         if nyckeltal not in data.keys():
             data[nyckeltal] = dict()
-        
+
         data[nyckeltal][year] = dict()
 
         for item in post['values']:
             gender = item['gender']
             value = item['value']
             data[nyckeltal][year][gender] = value
-    
+
     return data
 
 
@@ -81,7 +81,7 @@ def all_kolada_calls(ID_map,country_id):
         count +=1
         if (count % 10 == 0):
             print("{} kommuner utav {} hanterade.".format(count,number_of_municipalities))
-    
+
     return country_data, municipalities_data
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ Denna sida innehåller följande delar:
 * [Funktioner i filen *InformationLog.py*](#funktioner-i-filen-informationlog)
 * [Funktioner i filen *plot_funcs.py*](#funktioner-i-filen-plot_funcs)
 * [Funktioner i filen *dropdowns.py*](#funktioner-i-filen-dropdowns)
-* Funktioner i filen *diagram_classes.py*
+* [Funktioner i filen *diagram_classes.py*](#funktioner-i-filen-diagram_classes)
 * Funktioner i filen *main.py*
 
 **Här behöver vi ska vi göra om dessa till länkar till respektive rubrik**
@@ -503,6 +503,30 @@ Instansen.
 #### Argumentbeskrivning:
 Inga argument.
 
+----
+
+# Funktioner i filen *funktioner-i-filen-diagram_classes*
+Den här filen innehåller fem klasser: diagram_1, diagram_2, diagram_3, diagram_4, diagram_5. De har varsin init()-metod som enbart ärver instansieringen av [init()](#init-1), och utesluts därför.
+
+## Globala färgkoder
+Fyra färgkoder används flera gånger. De styrs av följande globala variabler.
+
+Variabel  | Beskrivning
+-------   | ----------
+`STANDARD_COL` | Används i scatter-diagrammen, samt i stapeldiagrammet med alla kommuner. För alla staplar/punkter.
+`HIGHLIGT_COL` | Används i scatter-diagrammen, samt i stapeldiagrammet med alla kommuner. För den highlight:ade stapeln/punkten.
+`COL1` | Färg för den övre dataserien i de två diagrammen med tre staplar
+`COL2` | Färg för den undre dataserien i diagram 3 med tre staplar
+
+## MALL funktionsNamn(arg1, ..., argN)
+Beskrivning. Inkludera funktion, samt eventuellt "särbeteende".
+#### Returnerar:
+Beskriv vad funktionen returnerar. Beskriv specialfall. Eventuellt ett exempel, om rimligt/hjälpsamt.
+#### Argumentbeskrivning:
+
+Argument | Beskrivning
+-------- | -----------
+`argumentNamn` | Beskrivning. Inkludera typ (sträng, int, ...), samt eventuella ytterligare krav.
 
 ## MALL funktionsNamn(arg1, ..., argN)
 Beskrivning. Inkludera funktion, samt eventuellt "särbeteende".
